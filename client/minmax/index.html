@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Min Max Lines</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+	body,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: "Lato", sans-serif
+	}
+
+	.w3-bar,
+	h1,
+	button {
+		font-family: "Montserrat", sans-serif
+	}
+
+	.fa-anchor,
+	.fa-coffee {
+		font-size: 200px
+	}
+</style>
+
+<body>
+
+	<!-- Navbar -->
+	<div class="w3-top">
+
+		<!-- Navbar on small screens -->
+		<div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 4</a>
+		</div>
+	</div>
+
+	<!-- Header -->
+	<header class="w3-container w3-red w3-center" style="padding:128px 16px">
+		<h1 class="w3-margin w3-jumbo">Minimum and Maximum Slope Line Finder</h1>
+		<p class="w3-xlarge">by Ethan DeGuire</p>
+		<!-- <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Get Started</button> -->
+</header>
+
+<!-- First Grid -->
+<div class="w3-row-padding w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-twothird">
+      <h1>
+        <button onclick="addLines(1)">Style One</button>
+        <button onclick="addLines(2)">Style Two</button>
+        <button onclick="addLines(3)">Style Three</button>
+        <div id="calculator" style="width : 100%">
+          <script src="https://www.desmos.com/api/v1.2/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+          <script src="script.js"></script>
+          <script src="helperfuncs.js"></script>
+          <script>
+            createCalc();
+            processData();
+            fixHeight();
+          </script>
+        </div>
+      </h1>
+
+      <h5 class="w3-padding-32">
+        <p id = 'showEquations'>
+          Equation will show up here.
+        </p>
+      </h5>
+
+      <h5 class="w3-padding-32">
+        <div id='boxInputCSV'>
+          <fieldset>
+            <legend>Comma Separated Values - by type</legend>
+            X Values:<br>
+            <input type="text" name="xvals" class = "dataInputCSV"><br>
+            X Uncertainties:<br>
+            <input type="text" name="xuncerts" class = "dataInputCSV"><br>
+            Y Values:<br>
+            <input type="text" name="yvals" class = "dataInputCSV"><br>
+            Y Uncertainties:<br>
+            <input type="text" name="yuncerts" class = "dataInputCSV"><br>
+            <input id = 'comma' type="radio" name="delim" value="," checked = true> Commas<br>
+            <input id = 'space' type="radio" name="delim" value=" " checked = false> Spaces<br>
+            <button onclick="updateCSVData()">Update</button>
+            <button onclick="clearAll()">Clear Current Data</button>
+          </fieldset>
+        </div>
+      </h5>
+
+      <h7 class="w3-padding-36">
+        To use, type or copy in your data in an accepted format:
+        (seperated by commas or spaces), select which you used from
+        one of the two buttons, click update, and then try out the
+        different methods of finding the line
+      </h7>
+
+    </div>
+  </div>
+</div>
+</script>
+
+</body>
+</html>
