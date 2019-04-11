@@ -3,6 +3,10 @@ function fixHeight() {
   document.getElementById("calculator").style.height = h * 44 / 100 + "px";
 }
 
+function expo(x, f) {
+  return Number.parseFloat(x).toExponential(f);
+}
+
 function round(value, decimals) {
   return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }

@@ -188,17 +188,23 @@ function clearCommonExpressions() {
 }
 
 function prettyEquations(min, max) {
-  mMin = round(min[0],4)
-  bMin = round(min[1],4)
-  mMax = round(max[0],4)
-  bMax = round(max[1],4)
+  let expoForm = document.getElementById('rounding').checked
+  let func = round
+  let val = 5
+  if (expoForm) {
+    func = expo
+    val = 6
+  }
+  mMin = func(min[0],val)
+  bMin = func(min[1],val)
+  mMax = func(max[0],val)
+  bMax = func(max[1],val)
 
-  mAvg = round((min[0] + max[0])/2,4)
-  bAvg = round((min[1] + max[1])/2,4)
+  mAvg = func((min[0] + max[0])/2,val)
+  bAvg = func((min[1] + max[1])/2,val)
 
-  mUnc = round(max[0] - (min[0] + max[0])/2,4)
-  bUnc = round(max[1] - (min[1] + max[1])/2,4)
-
+  mUnc = func(max[0] - (min[0] + max[0])/2,val)
+  bUnc = func(max[1] - (min[1] + max[1])/2,val)
 
   return "Minimum Slope: y = " + mMin + "x + " + bMin + "<br> Maximum Slope: y = " + mMax + "x + " + bMax + "<br> Average: y = " + mAvg + "x ±" + mUnc + " + " + bAvg + " ±" + bUnc
 }

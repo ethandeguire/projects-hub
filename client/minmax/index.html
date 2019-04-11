@@ -31,21 +31,8 @@
 </style>
 
 <body>
-
-	<!-- Navbar -->
-	<div class="w3-top">
-
-		<!-- Navbar on small screens -->
-		<div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
-			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
-			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
-			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 4</a>
-		</div>
-	</div>
-
 	<!-- Header -->
-	<header class="w3-container w3-red w3-center" style="padding:128px 16px">
+	<header class="w3-container w3-red w3-center" style="padding:128px 16px; max-height: 500px">
 		<h1 class="w3-margin w3-jumbo">Minimum and Maximum Slope Line Finder</h1>
 		<p class="w3-xlarge">by Ethan DeGuire</p>
 		<!-- <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Get Started</button> -->
@@ -93,6 +80,8 @@
             <input id = 'space' type="radio" name="delim" value=" " checked = false> Spaces<br>
             <button onclick="updateCSVData()">Update</button>
             <button onclick="clearAll()">Clear Current Data</button>
+            <br>
+            <input id = 'rounding' type="checkbox">Exponential Form (use for weird numbers)</input>
           </fieldset>
         </div>
       </h5>
