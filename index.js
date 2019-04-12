@@ -13,6 +13,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/hub/index.html'))
 })
 
+
+//this is here to test restart
 app.get('/restart', (req, res) => {
   const shell = require('shelljs');
   shell.exec('restartethanserver')
