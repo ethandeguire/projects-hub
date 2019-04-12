@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const shell = require('shelljs');
 
 const app = express()
 var path = require('path')
@@ -10,6 +11,11 @@ app.use(express.static('client'))
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/hub/index.html'))
+})
+
+app.get('/restart', (req, res) => {
+  const shell = require('shelljs');
+  shell.exec('restartethanserver')
 })
 
 app.listen(3000, () => console.log('server started'))
