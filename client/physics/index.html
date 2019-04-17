@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Phys Data Cruch</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="styles.css">
+
+<body>
+	<!-- Navbar -->
+	<div class="w3-top">
+
+		<!-- Navbar on small screens -->
+		<div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Link 4</a>
+		</div>
+	</div>
+
+	<!-- Header -->
+	<header class="w3-container w3-red w3-center" style="padding:128px 16px">
+		<h1 class="w3-margin w3-jumbo">Physics Data Crunch</h1>
+		<p class="w3-xlarge">by Ethan DeGuire</p>
+		<!-- <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Get Started</button> -->
+
+    <script src = ../libraries/p5.min.js></script>
+    <script src = ../libraries/p5.dom.min.js></script>
+    <script src = chart.js></script>
+    <script src = helperfuncs.js></script>
+    <script src = makeGraph.js style = "float:right"></script>
+
+  </header>
+
+  <!-- First Grid -->
+  <div class="w3-content">
+    <div id='boxInputCSV'>
+      <fieldset>
+        <legend>Comma Separated Values - by type</legend>
+        X Values: <input type="text" id="xname" class="dataNames" value="x axis name">
+        <br>
+        <input type="text" id="xVals" class = "dataInputCSV" value = "1 2 3 4"><br>
+        X Uncertainties:<br>
+        <input type="text" id="xUncerts" class = "dataInputCSV" value = "0.8 0.9 0.7 0.8"><br>
+        Y Values:<br>
+        <input type="text" id="yVals" class = "dataInputCSV" value = "3 11 21 33"><br>
+        Y Uncertainties: <input type="text" id="yname" class="dataNames" value="y axis name">
+        <br>
+        <input type="text" id="yUncerts" class = "dataInputCSV" value = ".4 .5 .4 .5"><br>
+        <input name = 'delim' type="radio" value="," > Commas
+        <input name = 'delim' type="radio" value=" " checked = true> Spaces
+        <br>
+        <button onclick="clearAll()">Clear Data</button>
+        <hr>
+        <p> Relationship between x and y: <br> This will normalize your data to a linear relationship, from whichever you select.</p>
+        <input style = "display:inline; margin-left:6px" id = 'linear' type="radio" name="relationship"> Linear
+        <input style = "display:inline; margin-left:6px" id = 'quadratic' type="radio" name="relationship" checked = true> Quadratic
+        <input style = "display:inline; margin-left:6px" id = 'invSquare' type="radio" name="relationship"> Inverse Square 
+        <br>
+        <button onclick="linearizeData()">Add Data</button> 
+      </fieldset> 
+    </div>
+
+    <div id='sketchHolder' style="text-align:center; padding:10px; display:none"> </div>
+    <div id='sketchHolder2' style="text-align:center; padding:10px"> </div>
+
+    <div id='graphLables'>
+      <fieldset>
+        <legend>Add info to graph</legend>
+        Adjust positioning of: <br>
+        <input type="radio" value="title" name="selected" style="margin-left:10px"> Title
+        <input type="radio" value="xaxis" name="selected" style="margin-left:10px"> X-Axis Label
+        <input type="radio" value="yaxis" name="selected" style="margin-left:10px"> Y-Axis Label
+        <input type="radio" value="none"  name="selected" style="margin-left:10px" checked id="none"> None
+        <br>
+        Title:        <input type="text" id="title"  value = "sample title"><br>
+        X Axis Label: <input type="text" id="xaxis"  value = "x axis label"><br>
+        Y Axis Label: <input type="text" id="yaxis"  value = "y axis label"><br>
+      </fieldset> 
+    </div>
+
+    <div id='outputData'>
+        <table id="dataTable">
+          <tr>
+            <td>Row1 cell1</td>
+            <td>Row1 cell2</td>
+            <td>Row1 cell3</td>
+            <td>Row1 cell4</td>
+          </tr>
+        </table>
+    </div>
+  </div>
+</body>
+</html>
