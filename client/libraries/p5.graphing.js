@@ -8,6 +8,7 @@ class Graph {
       this.data.drawGridLines = true
     }
     this.colorList = { 'ORANGE': [255, 122, 0], 'BLACK': [10, 10, 10], 'GREY': [180, 180, 180], 'GRAY': [180, 180, 180], 'RED': [255, 0, 0], 'BLUE': [0, 0, 255], 'GREEN': [0, 255, 0], 'YELLOW': [230, 255, 0], 'WHITE': [250, 250, 250] }
+    this.backgroundCol('WHITE')
 
     this.data.sgx = 1 / 9  //location to start drawing graph:
     this.data.sgy = 8 / 9
