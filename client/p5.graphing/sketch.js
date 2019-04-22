@@ -8,8 +8,13 @@ function setup() {
   grph.yLabel('Velocity (m/s)')
   grph.title('Radius v Velocity', [0, 20])
   
-  grph.addPoints([4, 5, 6], [1, 2, 3])
-  grph.addPointUncert([0.1, 0.1, 0.1], [0.2, 0.2, 0.2])
+  // these two do the same thing:
+  grph.addPoints([[4, 5, 6], [1, 2, 3]], 'lists', "BLUE") 
+  // grph.addPoints([[4,1],[5,2],[6,3]], 'points', "BLUE")
+
+  // these two do the same thing:
+  // grph.addPointUncert([[0.1, 0.1, 0.1], [0.2, 0.2, 0.2]], 'lists')
+  grph.addPointUncert([[0.1,0.2],[0.1,0.2],[0.1,0.2]], 'points')
 
   grph.bestfit(true, "ORANGE")
 

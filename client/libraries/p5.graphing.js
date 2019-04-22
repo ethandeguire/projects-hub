@@ -75,7 +75,33 @@ class Graph {
     }
   }
 
-  addPoints(x_, y_, color = "RED") {
+  addPoints(data, type, color) {
+    let x_ = []
+    let y_ = []
+
+    if (type === 'lists'){
+      //format data locally
+      x_ = data[0]
+      y_ = data[1]
+    }
+  
+    else if (type === 'points'){
+      //convert array to my data type
+      for (let i = 0; i < data.length; i++){
+        x_[i] = data[i][0]
+        y_[i] = data[i][1]
+      }
+    }
+
+    else{
+      throw new Error('type is not passed: the second parameter to addPoints should be either "lists" or "points"')
+    }
+
+    //  if no color is defined, make color red
+    if (!color){
+      color = "RED"
+    }
+
     //  check that arrays are both the same length
     if (this.arraysInvalid(x_, y_)) throw new Error('point arrays are of different lengths')
 
@@ -114,7 +140,28 @@ class Graph {
     }
   }
 
-  addPointUncert(x_, y_) {
+  addPointUncert(data, type) {
+    let x_ = []
+    let y_ = []
+
+    if (type === 'lists'){
+      //format data locally
+      x_ = data[0]
+      y_ = data[1]
+    }
+  
+    else if (type === 'points'){
+      //convert array to my data type
+      for (let i = 0; i < data.length; i++){
+        x_[i] = data[i][0]
+        y_[i] = data[i][1]
+      }
+    }
+
+    else{
+      throw new Error('type is not passed: the second parameter to addPointUncert should be either "lists" or "points"')
+    }
+    
     //  check that arrays are both the same length
     if (this.arraysInvalid(x_, y_)) throw new Error('point uncertainty arrays are of different lengths')
 

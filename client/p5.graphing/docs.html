@@ -178,26 +178,26 @@
           overlap, or if you want to adjust the position of a label. In terms of pixels</p>
       </fieldset>
       <fieldset id=addpoints>
-        <h9>addPoints( [x1, x2, ...], [y1, y2, ...], color )</h9><br>
+        <h9>addPoints( [[x1, x2, ...], [y1, y2, ...]], 'lists', color )</h9><br>
+        <h9>addPoints( [[x1, y1], [x2, y2], [...]], 'points', color )</h9><br>
         <p1>Input a set of x-y points to be graphed</p1>
-        <pre
-          class="prettyprint">grph.addPoints([0, 1, 2, 3], [0.9, 0.8, 0.7, 0.6], "GREEN")<br>//draws green points at (0, 0.9), (1, 0.8), ...</pre>
+        <pre class="prettyprint">grph.addPoints([[0, 1, 2, 3], [0.9, 0.8, 0.7, 0.6]], 'lists', 'GREEN')<br>//draws green points at (0, 0.9), (1, 0.8), ...<br><br>// ^ makes the same points as: <br>grph.addPoints([[0, 0.9], [1, 0.8], [2, 0.7], [3, 0.6]], 'points', [255,120,60])</pre>
         <p1>x[],y[]:</p1>
         <p>Both arrays must be the same length</p>
-        <p>(x1, y1), (x2, y2) => [x1,x2], [y1,y2]</p>
+        <p>'points' mode: (x1, y1), (x2, y2) or 'lists' mode: [x1,x2], [y1,y2]</p>
         <p1>color:</p1>
         <p>select color: one of p5.graphing.js's presets or a custom color array in the form: [r,g,b]</p>
       </fieldset>
       <fieldset id=addpointuncert>
-        <h9>addPointUncert( [v1, v2, ...], [w1, w2, ...] )</h9><br>
+        <h9>addPointUncert( [[v1, v2, ...], [w1, w2, ...]], 'lists')</h9><br>
+        <h9>addPointUncert( [[v1, w1], [v2, w2], [...]], 'points')</h9><br>
         <p1>Input a set of x-y uncertainties to be drawn onto your points</p1>
-        <pre
-          class="prettyprint">grph.addPointUncert([0.4, 1, 0.2, 0.3], [0.2, 0.3, 0.2, 0.1])<br>//adds uncerts (0.4, 0.2), (1, 0.3), ...</pre>
+        <pre class="prettyprint">grph.addPointUncert([[0.4, 1, 0.2, 0.3], [0.2, 0.3, 0.2, 0.1]], 'lists')<br><br>// ^ makes the same uncertainties as: <br>grph.addPointUncert([[0.4, 0.2], [1, 0.3], [0.2, 0.2], [0.3, 0.1]], 'points', [255,120,60])</pre>
         <p1>v[], w[]:</p1>
         <p>v[] is the uncertainty list for your x[] values and w[] is for y[] values</p>
         <p>You must have added points to add uncertainties to those points</p>
         <p>Both arrays must be the same length, and the same length as the point arrays</p>
-        <p>(x1 ± v1, y1 ± w1), (x2 ± v2, y2 ± w2) => [x1,x2], [y1,y2], [v1,v2], [w1,w2]</p>
+        <p>'points' mode: (x1 ± v1, y1 ± w1) or 'lists' mode:(x2 ± v2, y2 ± w2) or [x1,x2], [y1,y2], [v1,v2], [w1,w2]</p>
       </fieldset>
       <fieldset id=bestfit>
         <h9>bestfit(<i>drawLabel, color</i>)</h9><br>
@@ -309,7 +309,7 @@
           <p>xy points and functions - included with complete download:</p>
           <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sunburst"></script>
           <pre class="prettyprint">&lt;!-- index.html --&gt;<br>&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;script&gt;src="p5.min.js"&lt;/script&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;script&gt;src="p5.graphing.min.js"&lt;/script&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;script&gt;src="index.js"&lt;/script&gt;<br>&lt;/html&gt;</pre>
-          <pre class="prettyprint">/* script.js */<br>function setup() {<br>&nbsp;&nbsp;&nbsp;&nbsp;createCanvas(500, 500)<br>&nbsp;&nbsp;&nbsp;&nbsp;background(60)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;let grph = new Graph('xy')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.xLabel('Radius (m)')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.yLabel('Velocity (m/s)')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.title('Radius v Velocity', [0, 20])<br>&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addPoints([4, 5, 6], [1, 2, 3])<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addPointUncert([0.1, 0.1, 0.1], [0.2, 0.2, 0.2])<br><br>&nbsp;&nbsp;&nbsp;&nbsp;grph.bestfit(true, "ORANGE")<br><br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addFunc(x => Math.sin(5 * x)+3, color = 'BLUE')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addFunc(Math.cos, color = 'GREEN')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addFunc(x => Math.sin(x) + 2)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;grph.xInterv(1)<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.yInterv(1)<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.axis(0, 8, 0, 5)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;grph.canvasLocation(70,70, 450, 450)<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.show()<br>}<br></pre>
+          <pre class="prettyprint">/* script.js */<br>function setup() {<br>&nbsp;&nbsp;&nbsp;&nbsp;createCanvas(500, 500)<br>&nbsp;&nbsp;&nbsp;&nbsp;background(60)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;let grph = new Graph('xy')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.xLabel('Radius (m)')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.yLabel('Velocity (m/s)')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.title('Radius v Velocity', [0, 20])<br>&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;/* these two do the same thing: */<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addPoints([[4, 5, 6], [1, 2, 3]], 'lists', "BLUE") <br>&nbsp;&nbsp;&nbsp;&nbsp;/* grph.addPoints([[4,1],[5,2],[6,3]], 'points', "BLUE") */<br><br>&nbsp;&nbsp;&nbsp;&nbsp;/* these two do the same thing: */<br>&nbsp;&nbsp;&nbsp;&nbsp;/* grph.addPointUncert([[0.1, 0.1, 0.1], [0.2, 0.2, 0.2]], 'lists') */<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addPointUncert([[0.1,0.2],[0.1,0.2],[0.1,0.2]], 'points')<br><br>&nbsp;&nbsp;&nbsp;&nbsp;grph.bestfit(true, "ORANGE")<br><br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addFunc(x => Math.sin(5 * x)+3, color = 'BLUE')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addFunc(Math.cos, color = 'GREEN')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addFunc(x => Math.sin(x) + 2)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;grph.xInterv(1)<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.yInterv(1)<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.axis(0, 8, 0, 5)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;grph.canvasLocation(70,70, 450, 450)<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.show()<br>}</pre>
           <!-- <script src="../libraries/p5.min.js"></script>
           <script src="../libraries/p5.graphing.js"></script>
           <script src="sketch.js"></script>
@@ -342,6 +342,13 @@
         <p>It consists of one class, "Graph", which is currently capable of creating xy plane graphs, with future plans for pie charts, histograms, box and whisker charts, and more.</p>
         <br>
         <p>The source code for this project can be found on <a style="padding:0%; margin:0%; color: skyblue" href='https://github.com/ethandeguire/projects-hub/blob/master/client/libraries/p5.graphing.js'><b>GitHub</b></a></p>
+      </fieldset>
+      <fieldset>
+        <h9>About Me</h9>
+        <p>I am a 16 year old highschool student at the <a style="padding:0%; margin:0%; color: skyblue" href='https://www.iatoday.org/apps/pages/index.jsp?uREC_ID=614251&type=d&pREC_ID=1090009'> International Academy West</a> and this is a project I started due to my desire to decrease the time spent in Excel for physics labs. I have further developed the graphing software that I made for that into this standalone library, designed to be easy to use.</p>
+        <br>
+        <p>I have been coding for two years, and p5.js was one of the first tools I worked with. I have made countless projects and tools using it.</p>
+        <br>
         <p>My other projects and my main page can be found on <a style="padding:0%; margin:0%; color: skyblue" href='https://ethandeguire.info'><b>my website</b></a></p>
       </fieldset>
       <fieldset>
