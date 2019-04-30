@@ -110,6 +110,8 @@
       color: aqua;
     }
   </style>
+  <script src='script.js'> </script>    
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sunburst"></script>           
 </head>
 
 <body>
@@ -285,9 +287,7 @@
     <!-- MAIN PAGE CONTENT -->
     <div class="content">
       <h1 id="home"><i>p5.graphing.js</i></h1>
-      <h3 style="margin-left:18px"> A library for p5.js <br> By
-        <linky style="color:skyblue" onclick="goTo('about')">Ethan DeGuire</linky>
-      </h3>
+      <h3 style="margin-left:18px"> A library for p5.js <br> By <linky style="color:skyblue" onclick="goTo('about')">Ethan DeGuire</linky></h3>
 
       <fieldset id=download>
         <h9>Download and Install</h9><br>
@@ -303,19 +303,45 @@
       </fieldset>
       <fieldset id=examples>
         <h9>EXAMPLES</h9><br>
-        <p1>Example 1 - xy Plane</p1>
-        <input type="button" value="Show Code / Canvas" onClick="showHideDiv('ex1')"/></input>
-        <div id="ex1" style="display: none">
+        
+        <!-- Toggle Button for example 1 -->
+        <p1>Example 1 - xy Plane <input type="button" value="Show Code / Canvas" onClick="showHideDiv('example1')"/></input></p1>
+        <!-- Example 1 div, for x-y plane -->
+        <div id="example1" style="display: none">
           <p>xy points and functions - included with complete download:</p>
-          <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sunburst"></script>
-          <pre class="prettyprint">&lt;!-- index.html --&gt;<br>&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;script&gt;src="p5.min.js"&lt;/script&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;script&gt;src="p5.graphing.min.js"&lt;/script&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;script&gt;src="index.js"&lt;/script&gt;<br>&lt;/html&gt;</pre>
-          <pre class="prettyprint">/* script.js */<br>function setup() {<br>&nbsp;&nbsp;&nbsp;&nbsp;createCanvas(500, 500)<br>&nbsp;&nbsp;&nbsp;&nbsp;background(60)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;let grph = new Graph('xy')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.xLabel('Radius (m)')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.yLabel('Velocity (m/s)')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.title('Radius v Velocity', [0, 20])<br>&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;/* these two do the same thing: */<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addPoints([[4, 5, 6], [1, 2, 3]], 'lists', "BLUE") <br>&nbsp;&nbsp;&nbsp;&nbsp;/* grph.addPoints([[4,1],[5,2],[6,3]], 'points', "BLUE") */<br><br>&nbsp;&nbsp;&nbsp;&nbsp;/* these two do the same thing: */<br>&nbsp;&nbsp;&nbsp;&nbsp;/* grph.addPointUncert([[0.1, 0.1, 0.1], [0.2, 0.2, 0.2]], 'lists') */<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addPointUncert([[0.1,0.2],[0.1,0.2],[0.1,0.2]], 'points')<br><br>&nbsp;&nbsp;&nbsp;&nbsp;grph.bestfit(true, "ORANGE")<br><br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addFunc(x => Math.sin(5 * x)+3, color = 'BLUE')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addFunc(Math.cos, color = 'GREEN')<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.addFunc(x => Math.sin(x) + 2)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;grph.xInterv(1)<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.yInterv(1)<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.axis(0, 8, 0, 5)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;grph.canvasLocation(70,70, 450, 450)<br>&nbsp;&nbsp;&nbsp;&nbsp;grph.show()<br>}</pre>
-          <!-- <script src="../libraries/p5.min.js"></script>
-          <script src="../libraries/p5.graphing.js"></script>
-          <script src="sketch.js"></script>
-          <div id='sketchHolder' style="text-align:center; padding:10px; display:none"> </div> -->
-          <iframe src="index.html" style="-ms-flex-align: center;" frameborder="0" scrolling="no" height="500px" width="500px"></iframe>
+          
+          <!-- Show the pretty HTML and JS -->
+          <div id="example1code">
+              <script>
+                prettyFile("samples/xySample.js", 'example1code')
+                prettyFile("samples/xySample.html", 'example1code')
+              </script>
+            </div>
+
+          <!-- Canvas running the example code -->
+          <iframe src="samples/xySample.html" style="-ms-flex-align: center; " frameborder="0" scrolling="no" height="500px" width="500px"></iframe>
         </div>
+
+        <br><br>
+
+        <!-- Toggle Button for example 1 -->
+        <p1>Example 2 - Pie Chart <input type="button" value="Show Code / Canvas" onClick="showHideDiv('example2')"/></input></p1>
+        <!-- Example 2 div, for x-y plane -->
+        <div id="example2" style="display: none">
+          <p>Pie Chart maker, included with complete download:</p>
+          
+          <!-- Show the pretty HTML and JS -->
+          <div id="example2code">
+            <script>
+              prettyFile("samples/pieSample.js", 'example2code')
+              prettyFile("samples/pieSample.html", 'example2code')
+            </script>
+          </div>
+
+          <!-- Canvas running the example code -->
+          <iframe src="samples/pieSample.html" style="-ms-flex-align: center; " frameborder="0" scrolling="no" height="500px" width="500px"></iframe>
+        </div>
+
       </fieldset>
     </div>
   </div>
@@ -361,33 +387,6 @@
       </fieldset>
     </div>
   </div>
-  
-  
-  <script type="text/javascript">
-    function goTo(page) {
-      var i;
-      var x = document.getElementsByClassName("pages");
-      for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-      }
-      document.getElementById(page).style.display = "block";
-    }
-  </script>
-  <script type="text/javascript">
-    function showHideDiv(ele) {
-      var srcElement = document.getElementById(ele);
-      if (srcElement != null) {
-        if (srcElement.style.display == "block") {
-          srcElement.style.display = 'none';
-        }
-        else {
-          srcElement.style.display = 'block';
-        }
-        return false;
-      }
-    }
-  </script>
-
 </body>
 
 </html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<title>Hub - Ethan DeGuire</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="index.css">
+<script src="sketch.js"></script>
+
+
+<body>
+
+  <!-- Navbar (sit on top) -->
+  <div class="w3-top">
+    <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+      <a href="#home" class="w3-bar-item w3-button"><b>Ethan</b> DeGuire</a>
+      <!-- Float links to the right. Hide them on small screens -->
+      <div class="w3-right w3-hide-small">
+        <a href="#projects" class="w3-bar-item w3-button">Projects</a>
+        <a href="#about" class="w3-bar-item w3-button">About</a>
+        <a href="../hub/contact.html#media" class="w3-bar-item w3-button">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
+    <img class="w3-image" src="https://i.imgur.com/zZEJV1S.png" alt="Circles" width="1500" height="800">
+    <div class="w3-display-middle w3-margin-top w3-center">
+      <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Ethan DeGuire</b></span>
+      </h1>
+    </div>
+  </header>
+
+  <!-- Page content -->
+  <div class="w3-content w3-padding" style="max-width:1564px">
+
+    <!-- Project Section -->
+    <div class="w3-container" id="projects">
+      <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Projects:</h3>
+    </div>
+
+    <div class="w3-row-padding">
+
+      <!-- <div class="w3-col l3 m6 w3-margin-bottom">
+      <img src="https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/hires/2017/2-whyitsimport.jpg" alt="Phys Program" style="width:100%">
+      <h3></h3>
+      <p class="w3-opacity">JavaScript, HTML, Desmos GC API, p5.js</p>
+      <p> Physics Data Processor </p>
+      <p><button onclick="location.href = '../physics/index.html'" button class="w3-button w3-light-grey w3-block">View</button></p>
+      </div> -->
+
+      <div class="w3-col l3 m1 w3-margin-bottom">
+        <img src="https://i.imgur.com/OkT2x6W.png" alt="MinMax Program" style="width:100%">
+        <h3></h3>
+        <p class="w3-opacity">JavaScript, HTML, Desmos GC API</p>
+        <p> This project makes use of a powerful API, made by Desmos, with a graphing calculator embedded in the page to
+          show points with uncertainty values, and equations based off of calculations done in JavaScript. The purpose
+          of it is to automate a process which can take a significant amount of time, finding minimum and maximum slope
+          gradients given a dataset. I did this to help speed up the process of writing Physics lab reports.</p>
+        <p><button onclick="location.href = '../minmax/index.html'" button class="w3-button w3-light-grey w3-block">View</button></p>
+      </div>
+
+      <div class="w3-col l3 m6 w3-margin-bottom">
+        <img src="https://i.imgur.com/U9QYf21.png" alt="WebArt Pic" style="width:100%">
+        <h3>WebArt</h3>
+        <p class="w3-opacity">p5.js</p>
+        <p> A project created in collaboration with my classmate, Jake, that seeks to create a basic yet capable online
+          pixel art platform. <a href="https://github.com/reallylogical/webcode">Code</a></p>
+        <p><button onclick="location.href = '../webart/index.html'" button
+            class="w3-button w3-light-grey w3-block">View</button></p>
+      </div>
+
+      <div class="w3-col l3 m6 w3-margin-bottom">
+        <img src="https://i.imgur.com/zU2JgRz.png" alt="Stats" style="width:100%">
+        <h3>Statistics Calulator</h3>
+        <p class="w3-opacity">p5.js</p>
+        <p>Histogram, box plot, and number cruncher for 1-var statistics data. Created as a side project to further
+          understand mathematical knowledge. <a href="https://github.com/ethandeguire/stats">Code</a></p>
+        <p><button onclick="location.href = '../stats/index.html'" button
+            class="w3-button w3-light-grey w3-block">View</button></p>
+      </div>
+
+      <div class="w3-col l3 m6 w3-margin-bottom">
+        <img src="https://i.imgur.com/CfKXVc9.png" alt="Block Breaker IMG" style="width:100%">
+        <h3></h3>
+        <p class="w3-opacity">p5.js, Express</p>
+        <p> This project is a clone of the CoolMath game https://www.coolmathgames.com/0-bricksbreaking, with a server
+          hosted leaderboard and score tracking system coded in Express, with the front-end written in p5.js.</p>
+        <p><button onclick="location.href = '../blockbreaker/index.html'" button
+            class="w3-button w3-light-grey w3-block">View</button></p>
+      </div>
+
+      <div class="w3-col l3 m6 w3-margin-bottom">
+        <img src="https://i.imgur.com/lmi1Gkk.png" alt="War Simulation" style="width:100%">
+        <h3>Rubiks Cube Simulation</h3>
+        <p class="w3-opacity">p5.js</p>
+        <p>While not visually impressive, this simulation performs all of the calculations for the rotations when a
+          Rubiks cube is turned. It can take CSV data representing a cube as an input, and displays the Cube in two
+          dimensions.</p>
+        <p><button onclick="location.href = '../rubiks/index.html'" button
+            class="w3-button w3-light-grey w3-block">View</button></p>
+      </div>
+
+      <div class="w3-col l3 m6 w3-margin-bottom">
+        <img src="https://i.imgur.com/xzWrONr.png" alt="rpi diagram" style="width:100%">
+        <h3>Alarm Pi</h3>
+        <p class="w3-opacity">python</p>
+        <p> 10th grade personal project. I created an alarm clock with the goal of being able to wake me up - and
+          succeeded. </p>
+        <button
+          onclick="location.href = 'https://docs.google.com/document/d/1RRB5N7dvNss7PgsWLwNFRfHZF8NrjmtFIERk9N_sQhc/edit?usp=sharing'"
+          button class="w3-button w3-light-grey w3-block">View</button>
+      </div>
+
+      <div class="w3-col l3 m6 w3-margin-bottom">
+        <img src="https://i.imgur.com/OnpXDW2.png" alt="Electric Field" style="width:100%">
+        <h3>Electric Field Simulation</h3>
+        <p class="w3-opacity">p5.js</p>
+        <p>WIP - Basic simulation of an electric field.</p>
+        <p><button onclick="location.href = '../eField/index.html'" button
+            class="w3-button w3-light-grey w3-block">View</button></p>
+      </div>
+
+      <div class="w3-col l3 m6 w3-margin-bottom">
+        <img src="https://i.imgur.com/iSGw5Zx.png" alt="War Simulation" style="width:100%">
+        <h3>Card Game 'War' Simulation</h3>
+        <p class="w3-opacity">p5.js</p>
+        <p>Simulation of the card game 'War', it is a game of chance and uses randomly generated numbers to simulate the
+          card game at high speeds. A text file can be downloaded with the amount of ties across many games of war.</p>
+        <p><button onclick="location.href = '../warSim/index.html'" button
+            class="w3-button w3-light-grey w3-block">View</button></p>
+      </div>
+
+
+      <div class="w3-col l3 m6 w3-margin-bottom">
+        <img src="https://i.imgur.com/eljRvOR.png" alt="War Simulation" style="width:100%">
+        <h3>Kepler's 3rd Law - Gravitation</h3>
+        <p class="w3-opacity">p5.js</p>
+        <p>Uses Kepler's 3rd Law to model gravitational orbit given two of three variables: period, distance between
+          bodies, and mass of the Earth</p>
+        <p><button onclick="location.href = '../gravity/index.html'" button
+            class="w3-button w3-light-grey w3-block">View</button></p>
+      </div>
+    </div>
+
+
+    <!-- About Section -->
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="w3-container w3-padding-32" id="about">
+      <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">About</h3>
+      <p>
+        I am a 16 year old student at the International Academy West. I enjoy programming and creating web apps in my
+        spare time, and this page is dedicated to showing a few of my projects.
+      </p>
+      <p><button onclick="location.href = '../hub/contact.html#media'" button
+          class="w3-button w3-light-grey w3-block">Contact</button></p>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+
+</html>

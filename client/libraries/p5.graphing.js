@@ -2,34 +2,39 @@ class Graph {
   constructor(type_ = 'xy') {
     this.data = {}
     this.data.type = type_
+
+    this.colorList = { 'ORANGE': [255, 122, 0], 'BLACK': [10, 10, 10], 'GREY': [180, 180, 180], 'GRAY': [180, 180, 180], 'RED': [255, 0, 0], 'BLUE': [0, 0, 255], 'GREEN': [0, 255, 0], 'YELLOW': [230, 255, 0], 'WHITE': [250, 250, 250] }
+    this.backgroundCol('WHITE')
+
     if (type_ === 'xy') {
       this.data.functs = []
       this.data.points = { color: [255, 0, 0] }
       this.data.drawGridLines = true
-    }
-    this.colorList = { 'ORANGE': [255, 122, 0], 'BLACK': [10, 10, 10], 'GREY': [180, 180, 180], 'GRAY': [180, 180, 180], 'RED': [255, 0, 0], 'BLUE': [0, 0, 255], 'GREEN': [0, 255, 0], 'YELLOW': [230, 255, 0], 'WHITE': [250, 250, 250] }
-    this.backgroundCol('WHITE')
 
-    this.data.sgx = 1 / 9  //location to start drawing graph:
-    this.data.sgy = 8 / 9
-    this.data.egx = 8 / 9 //location to end drawing graph:
-    this.data.egy = 1 / 9
+      this.data.sgx = 1 / 9  //location to start drawing graph:
+      this.data.sgy = 8 / 9
+      this.data.egx = 8 / 9 //location to end drawing graph:
+      this.data.egy = 1 / 9
+    }
+    else if (type_ === 'pie') {
+      this.data.slices = {}
+    }
   }
 
   xLabel(xLabel_, coords_ = [0, 0]) {
     this.data.xLabel = {}
     this.data.xLabel.value = xLabel_
-    this.data.xLabel.coordsOffset = [coords_[0], coords_[1] * -1] 
+    this.data.xLabel.coordsOffset = [coords_[0], coords_[1] * -1]
   }
   yLabel(yLabel_, coords_ = [0, 0]) {
     this.data.yLabel = {}
     this.data.yLabel.value = yLabel_
-    this.data.yLabel.coordsOffset = [coords_[0], coords_[1] * -1] 
+    this.data.yLabel.coordsOffset = [coords_[0], coords_[1] * -1]
   }
   title(title_, coords_ = [0, 0]) {
     this.data.title = {}
     this.data.title.value = title_
-    this.data.title.coordsOffset = [coords_[0], coords_[1] * -1] 
+    this.data.title.coordsOffset = [coords_[0], coords_[1] * -1]
   }
   xlimits(btm, top) {
     if (!btm.isNaN && !top.isNaN) {
@@ -63,14 +68,19 @@ class Graph {
 
   getColor(col_) {
     if (typeof col_ !== 'string') {
-      if (col_.length === 3 && col_.every(x => x >= 0 && x <= 255)) {
+      if (Array.isArray(col_) && col_.every(x => x >= 0 && x <= 255)){
         return col_
+      } else {
+        console.log("BROKEN:", col_)
+        console.log('color format unable to be parsed. use an array:[r,g,b]. or a graphing Color')
+        return this.colorList["RED"]
       }
     } else {
       try {
         return this.colorList[col_]
       } catch (err) {
-        throw new Error('color unable to be parsed')
+        console.log('color unable to be parsed, using default color red')
+        return this.colorList["RED"]
       }
     }
   }
@@ -79,26 +89,26 @@ class Graph {
     let x_ = []
     let y_ = []
 
-    if (type === 'lists'){
+    if (type === 'lists') {
       //format data locally
       x_ = data[0]
       y_ = data[1]
     }
-  
-    else if (type === 'points'){
+
+    else if (type === 'points') {
       //convert array to my data type
-      for (let i = 0; i < data.length; i++){
+      for (let i = 0; i < data.length; i++) {
         x_[i] = data[i][0]
         y_[i] = data[i][1]
       }
     }
 
-    else{
+    else {
       throw new Error('type is not passed: the second parameter to addPoints should be either "lists" or "points"')
     }
 
     //  if no color is defined, make color red
-    if (!color){
+    if (!color) {
       color = "RED"
     }
 
@@ -144,24 +154,24 @@ class Graph {
     let x_ = []
     let y_ = []
 
-    if (type === 'lists'){
+    if (type === 'lists') {
       //format data locally
       x_ = data[0]
       y_ = data[1]
     }
-  
-    else if (type === 'points'){
+
+    else if (type === 'points') {
       //convert array to my data type
-      for (let i = 0; i < data.length; i++){
+      for (let i = 0; i < data.length; i++) {
         x_[i] = data[i][0]
         y_[i] = data[i][1]
       }
     }
 
-    else{
+    else {
       throw new Error('type is not passed: the second parameter to addPointUncert should be either "lists" or "points"')
     }
-    
+
     //  check that arrays are both the same length
     if (this.arraysInvalid(x_, y_)) throw new Error('point uncertainty arrays are of different lengths')
 
@@ -364,29 +374,39 @@ class Graph {
     fill(0)
     textAlign(CENTER)
 
-    //y label:
-    if (this.data.yLabel) {
-      push()
-      let xY = (wid / 16) + this.data.yLabel.coordsOffset[0]
-      let yY = (hei / 2) + this.data.yLabel.coordsOffset[1]
-      translate(xY, yY)
-      rotate(-1 * Math.PI / 2)
-      text(this.data.yLabel.value, 0, 0)
-      pop()
-    }
+    if (this.data.type === 'xy') {
+      //y label:
+      if (this.data.yLabel) {
+        push()
+        let xY = (wid / 16) + this.data.yLabel.coordsOffset[0]
+        let yY = (hei / 2) + this.data.yLabel.coordsOffset[1]
+        translate(xY, yY)
+        rotate(-1 * Math.PI / 2)
+        text(this.data.yLabel.value, 0, 0)
+        pop()
+      }
 
-    //x label:
-    if (this.data.xLabel) {
-      let xX = (wid / 2) + this.data.xLabel.coordsOffset[0]
-      let yX = (hei / 16 * 15) + this.data.xLabel.coordsOffset[1]
-      text(this.data.xLabel.value, xX, yX)
-    }
+      //x label:
+      if (this.data.xLabel) {
+        let xX = (wid / 2) + this.data.xLabel.coordsOffset[0]
+        let yX = (hei / 16 * 15) + this.data.xLabel.coordsOffset[1]
+        text(this.data.xLabel.value, xX, yX)
+      }
 
-    //title:
-    if (this.data.title) {
-      let xT = (wid / 2) + this.data.title.coordsOffset[0]
-      let yT = (hei / 9) + this.data.title.coordsOffset[1]
-      text(this.data.title.value, xT, yT)
+      //title:
+      if (this.data.title) {
+        let xT = (wid / 2) + this.data.title.coordsOffset[0]
+        let yT = (hei / 9) + this.data.title.coordsOffset[1]
+        text(this.data.title.value, xT, yT)
+      }
+    }
+    else if (this.data.type === 'pie') {
+      //title:
+      if (this.data.title) {
+        let xT = (wid / 2) + this.data.title.coordsOffset[0]
+        let yT = (hei / 9) + this.data.title.coordsOffset[1]
+        text(this.data.title.value, xT, yT)
+      }
     }
   }
 
@@ -400,20 +420,67 @@ class Graph {
   }
 
   show() {
-    if (!this.data.bounds) this.canvasLocation(0, 0, width, height) // assume use of whole canvas
+    // assume use of whole canvas
+    if (!this.data.bounds) this.canvasLocation(0, 0, width, height)
+    if (!this.data.backgroundCol) this.backgroundCol([255, 255, 255])
+
     console.log(this.data)
 
-    //  translate to allocated area to draw the chart
+    //  translate to allocated area to draw the xy data
     push()
     translate(this.data.bounds.xi, this.data.bounds.yi)
     fill(this.data.backgroundCol[0], this.data.backgroundCol[1], this.data.backgroundCol[2])
     rectMode(CORNERS)
     rect(0, 0, this.data.bounds.xwidth, this.data.bounds.yheight)
-    this.drawAxesAndLabels()
-    this.drawFunctionsOnCanvas()
-    this.drawPointsOnCanvas()
-    this.addAxesLabels()
+
+    if (this.data.type === 'xy') {
+      this.drawAxesAndLabels()
+      this.drawFunctionsOnCanvas()
+      this.drawPointsOnCanvas()
+      this.addAxesLabels()
+    }
+    else if (this.data.type === 'pie') {
+      this.addAxesLabels()
+      this.drawPieChart()
+    }
     pop()
+  }
+
+  drawPieChart() {
+    let obj = this.data.slices.obj
+    let bounds = this.data.bounds
+
+    let total = 0
+    for (let element in obj) {
+      total += obj[element]
+    }
+
+    if (this.data.slices.measureType === 'percent' && total !== 100) {
+      throw new Error('when using percent mode for slices(), your values must total 100%')
+    }
+
+    let angles = {}
+    for (let element in obj) {
+      angles[element] = (obj[element] / total) * (2 * PI)
+    }
+
+    let currentAng = 0
+    let i = 0
+    let cols = ["RED", "BLUE", "GREEN", "YELLOW", "BLACK", "GRAY"]
+    for (let element in obj) {
+      let min = 0
+      fill(this.getColor(cols[i]))
+      stroke(0)
+      strokeWeight(.3)
+      push()
+      translate(bounds.xwidth / 2, bounds.yheight / 2)
+      arc(0, 0, bounds.xwidth / 2, bounds.xwidth / 2, currentAng, currentAng + angles[element], PIE)
+      pop()
+      currentAng += angles[element]
+      i++
+    }
+
+    console.log(angles)
   }
 
   arraysInvalid(x, y) {  //  checks that length of sets are same, and all are numbers
@@ -453,4 +520,12 @@ class Graph {
 
     return [m, b]
   }
+
+  slices(slicesObj_, measure_) {
+    if (typeof slicesObj_ !== 'object') throw new Error('an object must be passed into slices()')
+    this.data.slices.obj = slicesObj_
+    this.data.slices.measureType = measure_
+  }
+
+
 }
