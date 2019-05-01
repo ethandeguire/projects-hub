@@ -110,14 +110,16 @@
       color: aqua;
     }
   </style>
-  <script src='script.js'> </script>    
-  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sunburst"></script>           
+  <script src='script.js'> </script>
+  <script src="../libraries/code-prettify/code-prettify.js"></script>
+  <link rel="stylesheet" type="text/css" href="../libraries/code-prettify/sunburst.css">
+  <link rel="stylesheet" type="text/css" href="../libraries/code-prettify/prettify.css">
 </head>
 
 <body>
 
   <!-- TOP NAVIGATION BAR -->
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" type="text/css" href="styles.css">
   <div class="w3-bar w3-black">
     <button class="w3-bar-item w3-button" onclick="goTo('documentation')">Documentation</button>
     <button class="w3-bar-item w3-button" onclick="goTo('getstarted')">Get Started</button>
@@ -144,10 +146,12 @@
     </div>
 
     <!-- MAIN CONTENT BAR -->
-  <div class="content">
-      <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sunburst"></script>
+    <div class="content">
+      <script src="../libraries/code-prettify/code-prettify.js"></script>
       <h1 id=home><i>p5.graphing.js</i></h1>
-      <h3 style="margin-left:18px"> A library for p5.js <br> By <linky style="color:skyblue" onclick="goTo('about')">Ethan DeGuire</linky></h3>
+      <h3 style="margin-left:18px"> A library for p5.js <br> By <linky style="color:skyblue" onclick="goTo('about')">
+          Ethan DeGuire</linky>
+      </h3>
 
       <!-- Documentation Elements -->
       <fieldset id=Graph>
@@ -160,11 +164,11 @@
         </p>
       </fieldset>
       <fieldset id=show>
-          <h9>show()</h9><br>
-          <p1>Draw your graph object</p1>
-          <pre class="prettyprint">grph.show()</pre>
-          <p> This one is pretty self explanatory</p>
-          <p> Should be called after all of your data and settings have been input</p>
+        <h9>show()</h9><br>
+        <p1>Draw your graph object</p1>
+        <pre class="prettyprint">grph.show()</pre>
+        <p> This one is pretty self explanatory</p>
+        <p> Should be called after all of your data and settings have been input</p>
       </fieldset>
       <fieldset id=labels>
         <h9>xLabel(text<i>, [x, y]</i>)</h9><br>
@@ -183,7 +187,8 @@
         <h9>addPoints( [[x1, x2, ...], [y1, y2, ...]], 'lists', color )</h9><br>
         <h9>addPoints( [[x1, y1], [x2, y2], [...]], 'points', color )</h9><br>
         <p1>Input a set of x-y points to be graphed</p1>
-        <pre class="prettyprint">grph.addPoints([[0, 1, 2, 3], [0.9, 0.8, 0.7, 0.6]], 'lists', 'GREEN')<br>//draws green points at (0, 0.9), (1, 0.8), ...<br><br>// ^ makes the same points as: <br>grph.addPoints([[0, 0.9], [1, 0.8], [2, 0.7], [3, 0.6]], 'points', [255,120,60])</pre>
+        <pre
+          class="prettyprint">grph.addPoints([[0, 1, 2, 3], [0.9, 0.8, 0.7, 0.6]], 'lists', 'GREEN')<br>//draws green points at (0, 0.9), (1, 0.8), ...<br><br>// ^ makes the same points as: <br>grph.addPoints([[0, 0.9], [1, 0.8], [2, 0.7], [3, 0.6]], 'points', [255,120,60])</pre>
         <p1>x[],y[]:</p1>
         <p>Both arrays must be the same length</p>
         <p>'points' mode: (x1, y1), (x2, y2) or 'lists' mode: [x1,x2], [y1,y2]</p>
@@ -194,12 +199,14 @@
         <h9>addPointUncert( [[v1, v2, ...], [w1, w2, ...]], 'lists')</h9><br>
         <h9>addPointUncert( [[v1, w1], [v2, w2], [...]], 'points')</h9><br>
         <p1>Input a set of x-y uncertainties to be drawn onto your points</p1>
-        <pre class="prettyprint">grph.addPointUncert([[0.4, 1, 0.2, 0.3], [0.2, 0.3, 0.2, 0.1]], 'lists')<br><br>// ^ makes the same uncertainties as: <br>grph.addPointUncert([[0.4, 0.2], [1, 0.3], [0.2, 0.2], [0.3, 0.1]], 'points', [255,120,60])</pre>
+        <pre
+          class="prettyprint">grph.addPointUncert([[0.4, 1, 0.2, 0.3], [0.2, 0.3, 0.2, 0.1]], 'lists')<br><br>// ^ makes the same uncertainties as: <br>grph.addPointUncert([[0.4, 0.2], [1, 0.3], [0.2, 0.2], [0.3, 0.1]], 'points', [255,120,60])</pre>
         <p1>v[], w[]:</p1>
         <p>v[] is the uncertainty list for your x[] values and w[] is for y[] values</p>
         <p>You must have added points to add uncertainties to those points</p>
         <p>Both arrays must be the same length, and the same length as the point arrays</p>
-        <p>'points' mode: (x1 ± v1, y1 ± w1) or 'lists' mode:(x2 ± v2, y2 ± w2) or [x1,x2], [y1,y2], [v1,v2], [w1,w2]</p>
+        <p>'points' mode: (x1 ± v1, y1 ± w1) or 'lists' mode:(x2 ± v2, y2 ± w2) or [x1,x2], [y1,y2], [v1,v2], [w1,w2]
+        </p>
       </fieldset>
       <fieldset id=bestfit>
         <h9>bestfit(<i>drawLabel, color</i>)</h9><br>
@@ -261,16 +268,17 @@
         <p>default: true, gridlines on</p>
       </fieldset>
       <fieldset id=canvaslocation>
-          <h9>canvasLocation(xi, yi, xf, yf)</h9><br>
-          <p1>Change where the chart is drawn on your canvas</p1>
-          <pre class="prettyprint">grph.createCanvas(100,100)<br>grph.canvasLocation(10,10,90,90)<br> // draws canvas from (10,10) to (90,90)</pre>
-          <p>If this command is not called, the chart will fill your entire canvas.</p>
-          <p1>xi, yi:</p1>
-          <p>The coordinate point of the top left corner of the chart on your canvas.</p>
-          <p1>xf, yf:</p1>
-          <p>The coordinate point of the bottom right corner of the chart on your canvas.</p>
-        </fieldset>
-  </div>
+        <h9>canvasLocation(xi, yi, xf, yf)</h9><br>
+        <p1>Change where the chart is drawn on your canvas</p1>
+        <pre
+          class="prettyprint">grph.createCanvas(100,100)<br>grph.canvasLocation(10,10,90,90)<br> // draws canvas from (10,10) to (90,90)</pre>
+        <p>If this command is not called, the chart will fill your entire canvas.</p>
+        <p1>xi, yi:</p1>
+        <p>The coordinate point of the top left corner of the chart on your canvas.</p>
+        <p1>xf, yf:</p1>
+        <p>The coordinate point of the bottom right corner of the chart on your canvas.</p>
+      </fieldset>
+    </div>
   </div>
 
   <!-- GET STARTED PAGE -->
@@ -287,49 +295,58 @@
     <!-- MAIN PAGE CONTENT -->
     <div class="content">
       <h1 id="home"><i>p5.graphing.js</i></h1>
-      <h3 style="margin-left:18px"> A library for p5.js <br> By <linky style="color:skyblue" onclick="goTo('about')">Ethan DeGuire</linky></h3>
+      <h3 style="margin-left:18px"> A library for p5.js <br> By <linky style="color:skyblue" onclick="goTo('about')">
+          Ethan DeGuire</linky>
+      </h3>
 
       <fieldset id=download>
         <h9>Download and Install</h9><br>
         <p>p5.graphing.js is a library for p5.js, and requires you to have either p5.min.js or p5.js installed alongside
           it.</p>
         <p1>Download:</p1><br>
-        <a href=https://github.com/ethandeguire/projects-hub/releases/download/v0.01/p5.graphing.complete.zip>Complete(with p5.graphing.js and example code)</a><br> 
-        <a href=https://github.com/ethandeguire/projects-hub/releases/download/v0.01/p5.graphing.min.zip>Minified p5.graphing.min.js</a> <br>
-        <a href=https://github.com/ethandeguire/projects-hub/releases/download/v0.01/p5.graphing.zip>p5.graphing.js</a><br>
+        <a href=https://github.com/ethandeguire/projects-hub/releases/download/v0.01/p5.graphing.complete.zip>Complete(with
+          p5.graphing.js and example code)</a> <br>
+          <a href=https://github.com/ethandeguire/projects-hub/releases/download/v0.01/p5.graphing.min.zip>Minified
+            p5.graphing.min.js</a> <br>
+            <a href=https://github.com/ethandeguire/projects-hub/releases/download/v0.01/p5.graphing.zip>p5.graphing.js
+              </a> <br>
       </fieldset>
       <fieldset id='documentation'>
-        <h1 style="font-size: 17px;"><b>Go to <linky style="color:skyblue" onclick="goTo('documentation')">Documentation</b></linky>
+        <h1 style="font-size: 17px;"><b>Go to <linky style="color:skyblue" onclick="goTo('documentation')">
+              Documentation</b></linky>
       </fieldset>
       <fieldset id=examples>
         <h9>EXAMPLES</h9><br>
-        
+
         <!-- Toggle Button for example 1 -->
-        <p1>Example 1 - xy Plane <input type="button" value="Show Code / Canvas" onClick="showHideDiv('example1')"/></input></p1>
+        <p1>Example 1 - xy Plane <input type="button" value="Show Code / Canvas"
+            onClick="showHideDiv('example1')" /></input></p1>
         <!-- Example 1 div, for x-y plane -->
-        <div id="example1" style="display: none">
+        <fieldset id="example1" style="display: none">
           <p>xy points and functions - included with complete download:</p>
-          
+
           <!-- Show the pretty HTML and JS -->
           <div id="example1code">
-              <script>
-                prettyFile("samples/xySample.js", 'example1code')
-                prettyFile("samples/xySample.html", 'example1code')
-              </script>
-            </div>
+            <script>
+              prettyFile("samples/xySample.js", 'example1code')
+              prettyFile("samples/xySample.html", 'example1code')
+            </script>
+          </div>
 
           <!-- Canvas running the example code -->
-          <iframe src="samples/xySample.html" style="-ms-flex-align: center; " frameborder="0" scrolling="no" height="500px" width="500px"></iframe>
-        </div>
+          <iframe style="margin-left:50px" src="samples/xySample.html" style="-ms-flex-align: center; " frameborder="0"
+            scrolling="no" height="500px" width="500px"></iframe>
+        </fieldset>
 
         <br><br>
 
         <!-- Toggle Button for example 1 -->
-        <p1>Example 2 - Pie Chart <input type="button" value="Show Code / Canvas" onClick="showHideDiv('example2')"/></input></p1>
+        <p1>Example 2 - Pie Chart <input type="button" value="Show Code / Canvas"
+            onClick="showHideDiv('example2')" /></input></p1>
         <!-- Example 2 div, for x-y plane -->
-        <div id="example2" style="display: none">
+        <fieldset id="example2" style="display: none">
           <p>Pie Chart maker, included with complete download:</p>
-          
+
           <!-- Show the pretty HTML and JS -->
           <div id="example2code">
             <script>
@@ -339,13 +356,14 @@
           </div>
 
           <!-- Canvas running the example code -->
-          <iframe src="samples/pieSample.html" style="-ms-flex-align: center; " frameborder="0" scrolling="no" height="500px" width="500px"></iframe>
-        </div>
+          <iframe style="margin-left:50px" src="samples/pieSample.html" style="-ms-flex-align: center; " frameborder="0"
+            scrolling="no" height="500px" width="500px"></iframe>
+        </fieldset>
 
       </fieldset>
     </div>
   </div>
-  
+
   <!-- ABOUT PAGE -->
   <div class=pages id=about style="display:none">
     <!-- SIDE NAVIGATION BAR -->
@@ -355,7 +373,7 @@
       <a href="#documentation">Documentation</a>
       <a href="#examples">Examples</a>
     </div> -->
-  
+
     <!-- MAIN PAGE CONTENT -->
     <div class="content">
       <h1 id="home"><i>p5.graphing.js</i></h1>
@@ -363,26 +381,40 @@
 
       <fieldset>
         <h9>About This Project</h9>
-        <p>p5.graphing.js was made by Ethan DeGuire, as a standalone library for <a style="padding:0%; margin:0%;" href='https://p5js.org/'>p5.js</a></p>
+        <p>p5.graphing.js was made by Ethan DeGuire, as a standalone library for <a style="padding:0%; margin:0%;"
+            href='https://p5js.org/'>p5.js</a></p>
         <br>
-        <p>It consists of one class, "Graph", which is currently capable of creating xy plane graphs, with future plans for pie charts, histograms, box and whisker charts, and more.</p>
+        <p>It consists of one class, "Graph", which is currently capable of creating xy plane graphs, with future plans
+          for pie charts, histograms, box and whisker charts, and more.</p>
         <br>
-        <p>The source code for this project can be found on <a style="padding:0%; margin:0%; color: skyblue" href='https://github.com/ethandeguire/projects-hub/blob/master/client/libraries/p5.graphing.js'><b>GitHub</b></a></p>
+        <p>The source code for this project can be found on <a style="padding:0%; margin:0%; color: skyblue"
+            href='https://github.com/ethandeguire/projects-hub/blob/master/client/libraries/p5.graphing.js'><b>GitHub</b></a>
+        </p>
       </fieldset>
+
       <fieldset>
         <h9>About Me</h9>
-        <p>I am a 16 year old highschool student at the <a style="padding:0%; margin:0%; color: skyblue" href='https://www.iatoday.org/apps/pages/index.jsp?uREC_ID=614251&type=d&pREC_ID=1090009'> International Academy West</a> and this is a project I started due to my desire to decrease the time spent in Excel for physics labs. I have further developed the graphing software that I made for that into this standalone library, designed to be easy to use.</p>
+        <p>I am a 16 year old highschool student at the <a style="padding:0%; margin:0%; color: skyblue"
+            href='https://www.iatoday.org/apps/pages/index.jsp?uREC_ID=614251&type=d&pREC_ID=1090009'> International
+            Academy West</a> and this is a project I started due to my desire to decrease the time spent in Excel for
+          physics labs. I have further developed the graphing software that I made for that into this standalone
+          library, designed to be easy to use.</p>
         <br>
-        <p>I have been coding for two years, and p5.js was one of the first tools I worked with. I have made countless projects and tools using it.</p>
+        <p>I have been coding for two years, and p5.js was one of the first tools I worked with. I have made countless
+          projects and tools using it.</p>
         <br>
-        <p>My other projects and my main page can be found on <a style="padding:0%; margin:0%; color: skyblue" href='https://ethandeguire.info'><b>my website</b></a></p>
+        <p>My other projects and my main page can be found on <a style="padding:0%; margin:0%; color: skyblue"
+            href='https://ethandeguire.info'><b>my website</b></a></p>
       </fieldset>
+
       <fieldset>
         <h9>How do I use it?</h9>
         <p>
-          <h1 style="font-size: 17px; margin:0%; padding: 0%"><b>Go to <linky style="color:skyblue" onclick="goTo('documentation')">Reference and Documentation</b></linky>
-          <br> or
-          <h1 style="font-size: 17px; margin:0%; padding: 0%"><b>Go to <linky style="color:skyblue" onclick="goTo('getstarted')">Get Started (with examples)</b></linky>
+          <h1 style="font-size: 17px; margin:0%; padding: 0%"><b>Go to <linky style="color:skyblue"
+                onclick="goTo('documentation')">Reference and Documentation</b></linky>
+            <br> or
+            <h1 style="font-size: 17px; margin:0%; padding: 0%"><b>Go to <linky style="color:skyblue"
+                  onclick="goTo('getstarted')">Get Started (with examples)</b></linky>
         </p>
       </fieldset>
     </div>

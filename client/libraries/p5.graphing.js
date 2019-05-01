@@ -17,6 +17,7 @@ class Graph {
       this.data.points = { color: [255, 0, 0] }
       this.data.drawGridLines = true
 
+      this.data.graphStartEnd = {}
       this.data.graphStartEnd.sgx = 1 / 9  //location to start drawing graph:
       this.data.graphStartEnd.sgy = 8 / 9
       this.data.graphStartEnd.egx = 8 / 9 //location to end drawing graph:
