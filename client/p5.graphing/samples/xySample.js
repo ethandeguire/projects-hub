@@ -4,7 +4,7 @@ function setup() {
   background(60)
 
   let grph = new Graph('xy')
-  grph.xLabel('Radius (m)')
+  grph.xLabel('Radius (m)', [0,-8])
   grph.yLabel('Velocity (m/s)')
   grph.title('Radius v Velocity', [0, 20])
   

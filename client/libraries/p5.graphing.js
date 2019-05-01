@@ -1,41 +1,77 @@
 class Graph {
+  
+  /**
+   * @param  {String} type_='xy'
+   */
   constructor(type_ = 'xy') {
     this.data = {}
     this.data.type = type_
 
-    this.colorList = { 'ORANGE': [255, 122, 0], 'BLACK': [10, 10, 10], 'GREY': [180, 180, 180], 'GRAY': [180, 180, 180], 'RED': [255, 0, 0], 'BLUE': [0, 0, 255], 'GREEN': [0, 255, 0], 'YELLOW': [230, 255, 0], 'WHITE': [250, 250, 250] }
+    this.colorList = { 'ORANGE': [255, 122, 0], 'BLACK': [10, 10, 10], 'GREY': [180, 180, 180], 'GRAY': [180, 180, 180], 'RED': [255, 0, 0], 'BLUE': [0, 0, 255], 'GREEN': [0, 255, 0], 'YELLOW': [230, 255, 0], 'WHITE': [250, 250, 250], 'PINK': [244, 66, 226] }
     this.backgroundCol('WHITE')
+
+    this.data.fontSizes = { 'title': 24, 'xLabel': 16, 'yLabel': 16, 'legend': 16 }
 
     if (type_ === 'xy') {
       this.data.functs = []
       this.data.points = { color: [255, 0, 0] }
       this.data.drawGridLines = true
 
-      this.data.sgx = 1 / 9  //location to start drawing graph:
-      this.data.sgy = 8 / 9
-      this.data.egx = 8 / 9 //location to end drawing graph:
-      this.data.egy = 1 / 9
+      this.data.graphStartEnd.sgx = 1 / 9  //location to start drawing graph:
+      this.data.graphStartEnd.sgy = 8 / 9
+      this.data.graphStartEnd.egx = 8 / 9 //location to end drawing graph:
+      this.data.graphStartEnd.egy = 1 / 9
     }
     else if (type_ === 'pie') {
       this.data.slices = {}
+      this.data.boolDrawLegend = true
+      this.data.slices.sliceColors = ["RED", "BLUE", "GREEN", "YELLOW", "BLACK", "GRAY", "PINK"]
+    }
+    else if (type === 'histogram') {
+      this.data.raw = []
+      this.data.mode = 'stddev'
     }
   }
 
+  noLegend() {
+    this.data.boolDrawLegend = false
+  }
+
+  /**
+   * @param  {'String'} xLabel_
+   * @param  {[Number, Number]} coords_
+   */
   xLabel(xLabel_, coords_ = [0, 0]) {
     this.data.xLabel = {}
     this.data.xLabel.value = xLabel_
     this.data.xLabel.coordsOffset = [coords_[0], coords_[1] * -1]
   }
+  
+  /**
+   * @param  {'String'} tLabel_
+   * @param  {[Number, Number]} coords_
+   */
   yLabel(yLabel_, coords_ = [0, 0]) {
     this.data.yLabel = {}
     this.data.yLabel.value = yLabel_
     this.data.yLabel.coordsOffset = [coords_[0], coords_[1] * -1]
   }
+
+  /**
+   * @param  {'String'} title_
+   * @param  {[Number, Number]} coords_
+   */
   title(title_, coords_ = [0, 0]) {
     this.data.title = {}
     this.data.title.value = title_
     this.data.title.coordsOffset = [coords_[0], coords_[1] * -1]
   }
+
+  
+  /**
+   * @param  {Number} btm
+   * @param  {Number} top
+   */
   xlimits(btm, top) {
     if (!btm.isNaN && !top.isNaN) {
       this.data.xMin = btm
@@ -44,31 +80,66 @@ class Graph {
       throw new Error('proper form is xlimits(xMin, xMax), and both must be numbers')
     }
   }
+
+  /**
+   * @param  {Number} btm
+   * @param  {Number} top
+   */
   ylimits(btm, top) {
     this.data.yMin = btm
     this.data.yMax = top
   }
+
+  
+  /**
+   * @param  {Number} xbtm
+   * @param  {Number} xtop
+   * @param  {Number} ybtm
+   * @param  {Number} ytop
+   */
   axis(xbtm, xtop, ybtm, ytop) {
     this.xlimits(xbtm, xtop)
     this.ylimits(ybtm, ytop)
   }
+
+  
+  /**
+   * @param  {Number} int
+   */
   xInterv(int) {
     this.data.xInterv = int
   }
+
+  /**
+   * @param  {Number} int
+   */
   yInterv(int) {
     this.data.yInterv = int
   }
+
+  /**
+   * @param  {String || Object} col_
+   */
   backgroundCol(col_) {
     this.data.backgroundCol = this.getColor(col_)
   }
+
+  
+  /**
+   * @param  {Boolean} bool
+   */
   drawGridLines(bool) {
     if (bool === true || bool === false) this.data.drawGridLines = bool
     else throw new Error('drawGridLines must be passed a boolean')
   }
 
+  /**
+   * @param  {String || Object} col_
+   * @returns {Object}
+   */
   getColor(col_) {
     if (typeof col_ !== 'string') {
-      if (Array.isArray(col_) && col_.every(x => x >= 0 && x <= 255)){
+      if (Array.isArray(col_) && col_.every(x => x >= 0 && x <= 255)) {
         return col_
       } else {
         console.log("BROKEN:", col_)
@@ -85,6 +156,11 @@ class Graph {
     }
   }
 
+  /**
+   * @param  {Object} data
+   * @param  {String} type
+   * @param  {String || Object} color
+   */
   addPoints(data, type, color) {
     let x_ = []
     let y_ = []
@@ -150,6 +226,10 @@ class Graph {
     }
   }
 
+  /**
+   * @param  {Object} data
+   * @param  {String} type
+   */
   addPointUncert(data, type) {
     let x_ = []
     let y_ = []
@@ -188,12 +268,24 @@ class Graph {
     this.data.points.uncertainties = arr
   }
 
+  
+  /**
+   * @param  {Function} func_
+   * @param  {String || Object} color
+   */
   addFunc(func_, color = 'BLACK') {
     this.data.functs.push({ 'func': func_, 'color': color })
   }
 
-  //  Corners mode: top left corner, bottom right corner
+  
+  /**
+   * @param  {Number} xi_
+   * @param  {Number} yi_
+   * @param  {Number} xf_
+   * @param  {Number} yf_
+   */
   canvasLocation(xi_, yi_, xf_, yf_) {
+    //  Corners mode: top left corner, bottom right corner
     this.data.bounds = {}
     this.data.bounds.xi = xi_
     this.data.bounds.yi = yi_
@@ -203,12 +295,14 @@ class Graph {
     this.data.bounds.yheight = yf_ - yi_
   }
 
+  /**
+   */
   drawAxesAndLabels() {
     //  call old variables as the new variables / localize data vars
-    let sgx = this.data.sgx // 1/8
-    let sgy = this.data.sgy // 7/8
-    let egx = this.data.egx // 7/8
-    let egy = this.data.egy // 1/8
+    let sgx = this.data.graphStartEnd.sgx // 1/8
+    let sgy = this.data.graphStartEnd.sgy // 7/8
+    let egx = this.data.graphStartEnd.egx // 7/8
+    let egy = this.data.graphStartEnd.egy // 1/8
     let wid = this.data.bounds.xwidth
     let hei = this.data.bounds.yheight
     let obj = this.data
@@ -253,12 +347,14 @@ class Graph {
     }
   }
 
+  /**
+   */
   drawFunctionsOnCanvas() {
     //  call old variables as the new variables / localize data vars
-    let sgx = this.data.sgx // 1/8
-    let sgy = this.data.sgy // 7/8
-    let egx = this.data.egx // 7/8
-    let egy = this.data.egy // 1/8
+    let sgx = this.data.graphStartEnd.sgx // 1/8
+    let sgy = this.data.graphStartEnd.sgy // 7/8
+    let egx = this.data.graphStartEnd.egx // 7/8
+    let egy = this.data.graphStartEnd.egy // 1/8
     let wid = this.data.bounds.xwidth
     let hei = this.data.bounds.yheight
     let obj = this.data
@@ -303,14 +399,26 @@ class Graph {
     }
   }
 
+  /**
+   * @param  {Number} x1
+   * @param  {Number} y1
+   * @param  {Number} x2
+   * @param  {Number} y2
+   */
   numLine(x1, y1, x2, y2) {
     line(this.numToPixelX(x1), this.numToPixelY(y1), this.numToPixelX(x2), this.numToPixelY(y2))
   }
 
+  
+
+  /**
+   * @param  {Number} point -- takes in number
+   * @returns {Number} -- spits out pixel
+   */
   numToPixelX(point) {
     //  call old variables as the new variables / localize data vars
-    let sgx = this.data.sgx // 1/8
-    let egx = this.data.egx // 7/8
+    let sgx = this.data.graphStartEnd.sgx // 1/8
+    let egx = this.data.graphStartEnd.egx // 7/8
     let wid = this.data.bounds.xwidth
     let obj = this.data
 
@@ -318,10 +426,15 @@ class Graph {
     let x = (wid * sgx) + ((point - obj.xMin) * xPixToNumScl)
     return x
   }
+
+  /**
+   * @param  {Number} point -- takes in number
+   * @returns {Number} -- spits out pixel
+   */
   numToPixelY(point) {
     //  call old variables as the new variables / localize data vars
-    let sgy = this.data.sgy // 7/8
-    let egy = this.data.egy // 1/8
+    let sgy = this.data.graphStartEnd.sgy // 7/8
+    let egy = this.data.graphStartEnd.egy // 1/8
     let hei = this.data.bounds.yheight
     let obj = this.data
 
@@ -329,7 +442,9 @@ class Graph {
     let y = (hei * sgy) - ((point - obj.yMin) * yPixToNumScl)
     return y
   }
-
+  
+  /**
+   */
   drawPointsOnCanvas() {
     let obj = this.data
 
@@ -366,6 +481,8 @@ class Graph {
     }
   }
 
+  /**
+   */
   addAxesLabels() {
     let wid = this.data.bounds.xwidth
     let hei = this.data.bounds.yheight
@@ -374,42 +491,42 @@ class Graph {
     fill(0)
     textAlign(CENTER)
 
-    if (this.data.type === 'xy') {
-      //y label:
-      if (this.data.yLabel) {
-        push()
-        let xY = (wid / 16) + this.data.yLabel.coordsOffset[0]
-        let yY = (hei / 2) + this.data.yLabel.coordsOffset[1]
-        translate(xY, yY)
-        rotate(-1 * Math.PI / 2)
-        text(this.data.yLabel.value, 0, 0)
-        pop()
-      }
-
-      //x label:
-      if (this.data.xLabel) {
-        let xX = (wid / 2) + this.data.xLabel.coordsOffset[0]
-        let yX = (hei / 16 * 15) + this.data.xLabel.coordsOffset[1]
-        text(this.data.xLabel.value, xX, yX)
-      }
-
-      //title:
-      if (this.data.title) {
-        let xT = (wid / 2) + this.data.title.coordsOffset[0]
-        let yT = (hei / 9) + this.data.title.coordsOffset[1]
-        text(this.data.title.value, xT, yT)
-      }
+    //y label:
+    if (this.data.yLabel) {
+      textSize(this.data.fontSizes.yLabel)
+      push()
+      let xY = (wid / 16) + this.data.yLabel.coordsOffset[0]
+      let yY = (hei / 2) + this.data.yLabel.coordsOffset[1]
+      translate(xY, yY)
+      rotate(-1 * Math.PI / 2)
+      text(this.data.yLabel.value, 0, 0)
+      pop()
     }
-    else if (this.data.type === 'pie') {
-      //title:
-      if (this.data.title) {
-        let xT = (wid / 2) + this.data.title.coordsOffset[0]
-        let yT = (hei / 9) + this.data.title.coordsOffset[1]
-        text(this.data.title.value, xT, yT)
-      }
+
+    //x label:
+    if (this.data.xLabel) {
+      textSize(this.data.fontSizes.xLabel)
+      let xX = (wid / 2) + this.data.xLabel.coordsOffset[0]
+      let yX = (hei / 16 * 15) + this.data.xLabel.coordsOffset[1]
+      text(this.data.xLabel.value, xX, yX)
     }
+
+    //title:
+    if (this.data.title) {
+      textSize(this.data.fontSizes.title)
+      let xT = (wid / 2) + this.data.title.coordsOffset[0]
+      let yT = (hei / 9) + this.data.title.coordsOffset[1]
+      text(this.data.title.value, xT, yT)
+    }
+
+
   }
 
+  /**
+   * @param  {Boolean} label=true
+   * @param  {String || Object} color="RED"
+   * @returns {null || undefined}
+   */
   bestfit(label = true, color = "RED") {
     if (!this.data.points.values) {
       console.log('NO DATA POINTS: input data points with addpoints([x],[y]) to use bestfit() function')
@@ -418,7 +535,9 @@ class Graph {
     let [m, b] = this.regression(this.data.points.values)
     this.addFunc(x => (x * m) + b, color)
   }
-
+  
+  /**
+   */
   show() {
     // assume use of whole canvas
     if (!this.data.bounds) this.canvasLocation(0, 0, width, height)
@@ -442,10 +561,47 @@ class Graph {
     else if (this.data.type === 'pie') {
       this.addAxesLabels()
       this.drawPieChart()
+      if (this.data.boolDrawLegend) this.drawLegend()
+    }
+    else if (this.data.type === 'histogram') {
+      this.drawHisto()
     }
     pop()
   }
 
+  /**
+   */
+  drawHisto() {
+  }
+  
+  /**
+   */
+  drawLegend() {
+    let len = Object.keys(this.data.slices.obj).length
+
+    let startY = 1 / 5 * this.data.bounds.yheight
+    let endY = 4 / 5 * this.data.bounds.yheight
+    let x = 2 / 3 * this.data.bounds.xwidth
+
+    let keys = Object.keys(this.data.slices.obj)
+    let vals = Object.values(this.data.slices.obj)
+    for (let i = 0; i < len; i++) {
+      fill(this.getColor(this.data.slices.sliceColors[i]))
+      rect(x, startY + (((endY - startY) / len) * i), x + 15, startY + 10 + (((endY - startY) / len) * i))
+      fill(0)
+      textAlign(LEFT, CENTER)
+      stroke(0)
+      strokeWeight(.3)
+      textSize(this.data.fontSizes.legend)
+      let str = keys[i] + ' - ' + vals[i]
+      if (this.data.slices.measureType == 'percent') str += '%'
+      text(str, x + 25, startY + (((endY - startY) / len) * i) + 5)
+    }
+
+  }
+  
+  /**
+   */
   drawPieChart() {
     let obj = this.data.slices.obj
     let bounds = this.data.bounds
@@ -466,14 +622,13 @@ class Graph {
 
     let currentAng = 0
     let i = 0
-    let cols = ["RED", "BLUE", "GREEN", "YELLOW", "BLACK", "GRAY"]
     for (let element in obj) {
       let min = 0
-      fill(this.getColor(cols[i]))
+      fill(this.getColor(this.data.slices.sliceColors[i]))
       stroke(0)
       strokeWeight(.3)
       push()
-      translate(bounds.xwidth / 2, bounds.yheight / 2)
+      translate(bounds.xwidth / 3, bounds.yheight / 2)
       arc(0, 0, bounds.xwidth / 2, bounds.xwidth / 2, currentAng, currentAng + angles[element], PIE)
       pop()
       currentAng += angles[element]
@@ -483,14 +638,30 @@ class Graph {
     console.log(angles)
   }
 
+  /**
+   * Checks that arrays are the same length and all are numbers
+   * @param  {Object} x 
+   * @param  {Object} y
+   * @returns {Boolean}
+   */
   arraysInvalid(x, y) {  //  checks that length of sets are same, and all are numbers
     return x.length !== y.length || x.some(isNaN) || y.some(isNaN)
   }
 
+  /**
+   * @param  {Number} value
+   * @param  {Number} decimals
+   * @returns  {Number} {returnNumber(Math.round(value+'e'+decimals
+   */
   roundTo(value, decimals) {
     return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals)
   }
 
+  
+  /**
+   * @param  {Object} data in point form
+   * @returns {Object} - [m,b] where {y = mx + b}
+   */
   regression(data) {
     let sumX = 0
     let sumY = 0
@@ -520,12 +691,14 @@ class Graph {
 
     return [m, b]
   }
-
+  
+  /**
+   * @param  {} slicesObj_
+   * @param  {} measure_
+   */
   slices(slicesObj_, measure_) {
     if (typeof slicesObj_ !== 'object') throw new Error('an object must be passed into slices()')
     this.data.slices.obj = slicesObj_
     this.data.slices.measureType = measure_
   }
-
-
 }
