@@ -3,7 +3,95 @@
 <title>Hub - Ethan DeGuire</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="index.css">
+
+<header>
+  <style>
+    .project-item {
+      display: inline-block;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      padding: 5px;
+      margin: 5px;
+      font-size: 12px;
+      text-align: center;
+      max-width: 30em;
+      vertical-align: middle;
+    }
+
+    .tools-used {
+      opacity: 0.45;
+    }
+
+    .view-button {
+      border: none;
+      display: inline-block;
+      width: 100%;
+      background-color: rgb(200, 190, 190);
+      padding: 8px 16px;
+      white-space: normal;
+      color: #000;
+      background-color: #f1f1f1;
+      display: block;
+    }
+
+    html,
+    body, header {
+      font-family: Verdana, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    html {
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    @media (max-width:600px) {
+      .hide-small {
+        display: none !important
+      }
+    }
+
+    .top-bar {
+      position: fixed;
+      width: 100%;
+      z-index: 1;
+      top: 0;
+      width: 100%;
+      overflow: hidden;
+      display: inline-block;
+      color: #000 !important;
+      background-color: #fff !important;
+      padding: 8px 16px !important;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+      max-height: 45px;
+    }
+
+    .button {
+      text-decoration: none;
+      text-align: center;
+      padding: 8px 16px;
+      color: black;
+    }
+
+    .button:hover {
+      color: #000 !important;
+      background-color: #ccc !important
+    }
+
+    .button:disabled {
+      cursor: not-allowed;
+      opacity: 0.3
+    }
+  </style>
+</header>
 
 <body>
 
@@ -29,6 +117,16 @@
 
     <div style="text-align:center;">
       <div class="project-item">
+        <img src="https://i.imgur.com/OkT2x6W.png" alt="MinMax Program" style="width:100%">
+        <h3>Min-Max Line Finder</h3>
+        <p class="tools-used">JavaScript, HTML, Desmos GC API</p>
+        <p> This project makes use of a powerful API, made by Desmos, with a graphing calculator embedded in the page to
+          show points with uncertainty values, and equations based off of calculations done in JavaScript. The purpose
+          of it is to automate a process which can take a significant amount of time, finding minimum and maximum slope
+          gradients given a dataset. I did this to help speed up the process of writing Physics lab reports.</p>
+        <p><button onclick="location.href = '../minmax/index.html'" button class="view-button">View</button></p>
+      </div>
+      <div class="project-item">
         <img src="https://i.imgur.com/U9QYf21.png" alt="WebArt Pic" style="width:100%">
         <h3>WebArt</h3>
         <p class="tools-used">p5.js</p>
@@ -36,16 +134,6 @@
           pixel art platform. <a href="https://github.com/reallylogical/webcode">Code</a></p>
         <p><button onclick="location.href = '../webart/index.html'" button class="view-button">View</button></p>
       </div>
-      <div class="project-item">
-          <img src="https://i.imgur.com/OkT2x6W.png" alt="MinMax Program" style="width:100%">
-          <h3>Min-Max Line Finder</h3>
-          <p class="tools-used">JavaScript, HTML, Desmos GC API</p>
-          <p> This project makes use of a powerful API, made by Desmos, with a graphing calculator embedded in the page to
-            show points with uncertainty values, and equations based off of calculations done in JavaScript. The purpose
-            of it is to automate a process which can take a significant amount of time, finding minimum and maximum slope
-            gradients given a dataset. I did this to help speed up the process of writing Physics lab reports.</p>
-          <p><button onclick="location.href = '../minmax/index.html'" button class="view-button">View</button></p>
-        </div>
       <div class="project-item">
         <img src="https://i.imgur.com/zU2JgRz.png" alt="Stats" style="width:100%">
         <h3>Statistics Calulator</h3>
