@@ -2,116 +2,11 @@
 <html lang="en">
 
 <head>
-  <title>Docs</title>
+  <title>p5.graphing - Documentation</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    fieldset {
-      padding: 10px;
-      margin: 100px;
-      border-color: antiquewhite
-    }
-
-    h9 {
-      margin: 2px;
-      padding: 2px;
-      padding-top: 0px;
-      font-size: 20px;
-      font-weight: bold;
-      display: inline-block;
-    }
-
-    p1 {
-      color: black;
-      margin: 0px;
-      padding-left: 20px;
-      padding-top: 3px;
-      font-size: 17px;
-    }
-
-    p {
-      color: black;
-      margin: 0px;
-      padding-left: 20px;
-      padding-top: 0px;
-      font-weight: 400;
-      font-size: 14px;
-      margin-left: 10px
-    }
-
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
-    }
-
-    /* Style the side navigation */
-    .sidenav {
-      height: 88%;
-      width: 200px;
-      position: fixed;
-      z-index: 1;
-      top: 50px;
-      left: 10px;
-      background-color: #111;
-      overflow-x: hidden;
-    }
-
-
-    /* Side navigation links */
-    .sidenav a {
-      color: white;
-      padding: 16px;
-      text-decoration: none;
-      display: block;
-    }
-
-    /* Change color on hover */
-    .sidenav a:hover {
-      background-color: #ddd;
-      color: black;
-    }
-
-    /* Style the content */
-    .content {
-      margin-left: 200px;
-      padding-left: 20px;
-    }
-
-    linky:link {
-      color: green;
-      background-color: transparent;
-      text-decoration: none;
-    }
-
-    linky:visited {
-      color: pink;
-      background-color: transparent;
-      text-decoration: none;
-    }
-
-    linky:hover {
-      color: red;
-      background-color: transparent;
-      text-decoration: underline;
-    }
-
-    linky:active {
-      color: yellow;
-      background-color: transparent;
-      text-decoration: underline;
-    }
-
-    a {
-      padding-left: 30px;
-      color: aqua;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="styles.css">
   <script src='script.js'> </script>
-  <script src="../libraries/code-prettify/code-prettify.js"></script>
   <link rel="stylesheet" type="text/css" href="../libraries/code-prettify/sunburst.css">
   <link rel="stylesheet" type="text/css" href="../libraries/code-prettify/prettify.css">
 </head>
@@ -119,15 +14,16 @@
 <body>
 
   <!-- TOP NAVIGATION BAR -->
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="w3.css">
+  
   <div class="w3-bar w3-black">
-    <button class="w3-bar-item w3-button" onclick="goTo('documentation')">Documentation</button>
-    <button class="w3-bar-item w3-button" onclick="goTo('getstarted')">Get Started</button>
-    <button class="w3-bar-item w3-button" onclick="goTo('about')">About</button>
+    <button class="w3-bar-item w3-button" onclick="window.location.href = 'docs.html';">Documentation</button>
+    <button class="w3-bar-item w3-button" onclick="window.location.href = 'getStarted.html';">Get Started</button>
+    <button class="w3-bar-item w3-button" onclick="window.location.href = 'about.html';">About</button>
   </div>
 
   <!-- DOCUMENTATION PAGE -->
-  <div id=documentation class=pages style='display:none'>
+  <div id=documentation class=pages>
 
     <!-- SIDE NAVIGATION BAR -->
     <div class="sidenav">
@@ -149,7 +45,8 @@
     <div class="content">
       <script src="../libraries/code-prettify/code-prettify.js"></script>
       <h1 id=home><i>p5.graphing.js</i></h1>
-      <h3 style="margin-left:18px"> A library for p5.js <br> By <linky style="color:skyblue" onclick="goTo('about')">
+      <h3 style="margin-left:18px"> A library for p5.js <br> By <linky style="color:skyblue"
+          onclick="window.location.href = 'about.html';">
           Ethan DeGuire</linky>
       </h3>
 
@@ -277,145 +174,6 @@
         <p>The coordinate point of the top left corner of the chart on your canvas.</p>
         <p1>xf, yf:</p1>
         <p>The coordinate point of the bottom right corner of the chart on your canvas.</p>
-      </fieldset>
-    </div>
-  </div>
-
-  <!-- GET STARTED PAGE -->
-  <div id=getstarted class=pages style="display:inline">
-
-    <!-- SIDE NAVIGATION BAR -->
-    <div class="sidenav">
-      <a href="#home">Home</a>
-      <a href="#download">Download and Install</a>
-      <a href="#documentation">Documentation</a>
-      <a href="#examples">Examples</a>
-    </div>
-
-    <!-- MAIN PAGE CONTENT -->
-    <div class="content">
-      <h1 id="home"><i>p5.graphing.js</i></h1>
-      <h3 style="margin-left:18px"> A library for p5.js <br> By <linky style="color:skyblue" onclick="goTo('about')">
-          Ethan DeGuire</linky>
-      </h3>
-
-      <fieldset id=download>
-        <h9>Download and Install</h9><br>
-        <p>p5.graphing.js is a library for p5.js, and requires you to have either p5.min.js or p5.js installed alongside
-          it.</p>
-        <p1>Download:</p1><br>
-        <a href=https://github.com/ethandeguire/projects-hub/releases/download/v0.01/p5.graphing.complete.zip>Complete(with
-          p5.graphing.js and example code)</a> <br>
-          <a href=https://github.com/ethandeguire/projects-hub/releases/download/v0.01/p5.graphing.min.zip>Minified
-            p5.graphing.min.js</a> <br>
-            <a href=https://github.com/ethandeguire/projects-hub/releases/download/v0.01/p5.graphing.zip>p5.graphing.js
-              </a> <br>
-      </fieldset>
-      <fieldset id='documentation'>
-        <h1 style="font-size: 17px;"><b>Go to <linky style="color:skyblue" onclick="goTo('documentation')">
-              Documentation</b></linky>
-      </fieldset>
-      <fieldset id=examples>
-        <h9>EXAMPLES</h9><br>
-
-        <!-- Toggle Button for example 1 -->
-        <p1>Example 1 - xy Plane <input type="button" value="Show Code / Canvas"
-            onClick="showHideDiv('example1')" /></input></p1>
-        <!-- Example 1 div, for x-y plane -->
-        <fieldset id="example1" style="display: none">
-          <p>xy points and functions - included with complete download:</p>
-
-          <!-- Show the pretty HTML and JS -->
-          <div id="example1code">
-            <script>
-              prettyFile("samples/xySample.js", 'example1code')
-              prettyFile("samples/xySample.html", 'example1code')
-            </script>
-          </div>
-
-          <!-- Canvas running the example code -->
-          <iframe style="margin-left:50px" src="samples/xySample.html" style="-ms-flex-align: center; " frameborder="0"
-            scrolling="no" height="500px" width="500px"></iframe>
-        </fieldset>
-
-        <br><br>
-
-        <!-- Toggle Button for example 1 -->
-        <p1>Example 2 - Pie Chart <input type="button" value="Show Code / Canvas"
-            onClick="showHideDiv('example2')" /></input></p1>
-        <!-- Example 2 div, for x-y plane -->
-        <fieldset id="example2" style="display: none">
-          <p>Pie Chart maker, included with complete download:</p>
-
-          <!-- Show the pretty HTML and JS -->
-          <div id="example2code">
-            <script>
-              prettyFile("samples/pieSample.js", 'example2code')
-              prettyFile("samples/pieSample.html", 'example2code')
-            </script>
-          </div>
-
-          <!-- Canvas running the example code -->
-          <iframe style="margin-left:50px" src="samples/pieSample.html" style="-ms-flex-align: center; " frameborder="0"
-            scrolling="no" height="500px" width="500px"></iframe>
-        </fieldset>
-
-      </fieldset>
-    </div>
-  </div>
-
-  <!-- ABOUT PAGE -->
-  <div class=pages id=about style="display:none">
-    <!-- SIDE NAVIGATION BAR -->
-    <!-- <div class="sidenav">
-      <a href="#home">Home</a>
-      <a href="#download">Download and Install</a>
-      <a href="#documentation">Documentation</a>
-      <a href="#examples">Examples</a>
-    </div> -->
-
-    <!-- MAIN PAGE CONTENT -->
-    <div class="content">
-      <h1 id="home"><i>p5.graphing.js</i></h1>
-      <h3 style="margin-left:18px"> A library for p5.js <br> By Ethan DeGuire</h3>
-
-      <fieldset>
-        <h9>About This Project</h9>
-        <p>p5.graphing.js was made by Ethan DeGuire, as a standalone library for <a style="padding:0%; margin:0%;"
-            href='https://p5js.org/'>p5.js</a></p>
-        <br>
-        <p>It consists of one class, "Graph", which is currently capable of creating xy plane graphs, with future plans
-          for pie charts, histograms, box and whisker charts, and more.</p>
-        <br>
-        <p>The source code for this project can be found on <a style="padding:0%; margin:0%; color: skyblue"
-            href='https://github.com/ethandeguire/projects-hub/blob/master/client/libraries/p5.graphing.js'><b>GitHub</b></a>
-        </p>
-      </fieldset>
-
-      <fieldset>
-        <h9>About Me</h9>
-        <p>I am a 16 year old highschool student at the <a style="padding:0%; margin:0%; color: skyblue"
-            href='https://www.iatoday.org/apps/pages/index.jsp?uREC_ID=614251&type=d&pREC_ID=1090009'> International
-            Academy West</a> and this is a project I started due to my desire to decrease the time spent in Excel for
-          physics labs. I have further developed the graphing software that I made for that into this standalone
-          library, designed to be easy to use.</p>
-        <br>
-        <p>I have been coding for two years, and p5.js was one of the first tools I worked with. I have made countless
-          projects and tools using it.</p>
-        <br>
-        <p>My other projects and my main page can be found on <a style="padding:0%; margin:0%; color: skyblue"
-            href='https://ethandeguire.info'><b>my website</b></a></p>
-      </fieldset>
-
-      <fieldset>
-        <h9>How do I use it?</h9>
-        <p>
-          <h1 style="font-size: 17px; margin:0%; padding: 0%"><b>Go to <linky style="color:skyblue"
-                onclick="goTo('documentation')">Reference and Documentation</b></linky>
-            <br> or
-            <h1 style="font-size: 17px; margin:0%; padding: 0%"><b>Go to <linky style="color:skyblue"
-                  onclick="goTo('getstarted')">Get Started (with examples)</b></linky>
-        </p>
       </fieldset>
     </div>
   </div>
