@@ -1,5 +1,5 @@
 class Graph {
-  
+
   /**
    * @param  {String} type_='xy'
    */
@@ -28,8 +28,7 @@ class Graph {
       this.data.boolDrawLegend = true
       this.data.slices.sliceColors = ["RED", "BLUE", "GREEN", "YELLOW", "BLACK", "GRAY", "PINK"]
     }
-    else if (type === 'histogram') {
-      this.data.raw = []
+    else if (type_ === 'histogram') {
       this.data.mode = 'stddev'
     }
   }
@@ -47,7 +46,7 @@ class Graph {
     this.data.xLabel.value = xLabel_
     this.data.xLabel.coordsOffset = [coords_[0], coords_[1] * -1]
   }
-  
+
   /**
    * @param  {'String'} tLabel_
    * @param  {[Number, Number]} coords_
@@ -68,7 +67,7 @@ class Graph {
     this.data.title.coordsOffset = [coords_[0], coords_[1] * -1]
   }
 
-  
+
   /**
    * @param  {Number} btm
    * @param  {Number} top
@@ -91,7 +90,7 @@ class Graph {
     this.data.yMax = top
   }
 
-  
+
   /**
    * @param  {Number} xbtm
    * @param  {Number} xtop
@@ -103,7 +102,7 @@ class Graph {
     this.ylimits(ybtm, ytop)
   }
 
-  
+
   /**
    * @param  {Number} int
    */
@@ -125,7 +124,7 @@ class Graph {
     this.data.backgroundCol = this.getColor(col_)
   }
 
-  
+
   /**
    * @param  {Boolean} bool
    */
@@ -269,7 +268,7 @@ class Graph {
     this.data.points.uncertainties = arr
   }
 
-  
+
   /**
    * @param  {Function} func_
    * @param  {String || Object} color
@@ -278,7 +277,7 @@ class Graph {
     this.data.functs.push({ 'func': func_, 'color': color })
   }
 
-  
+
   /**
    * @param  {Number} xi_
    * @param  {Number} yi_
@@ -410,7 +409,7 @@ class Graph {
     line(this.numToPixelX(x1), this.numToPixelY(y1), this.numToPixelX(x2), this.numToPixelY(y2))
   }
 
-  
+
 
   /**
    * @param  {Number} point -- takes in number
@@ -443,7 +442,7 @@ class Graph {
     let y = (hei * sgy) - ((point - obj.yMin) * yPixToNumScl)
     return y
   }
-  
+
   /**
    */
   drawPointsOnCanvas() {
@@ -536,7 +535,7 @@ class Graph {
     let [m, b] = this.regression(this.data.points.values)
     this.addFunc(x => (x * m) + b, color)
   }
-  
+
   /**
    */
   show() {
@@ -573,10 +572,130 @@ class Graph {
   /**
    */
   drawHisto() {
+    let sum = this.getSumOfNums(this.data.dataSet)
+    let sortedData = this.data.dataSet.sort((a, b) => a - b)
+
+    // Basic Stats
+    let avg = sum / sortedData.length
+    let min = sortedData[0]
+    let max = sortedData[sortedData.length - 1]
+    let stdDev = this.getStdDev(sortedData)
+    let medianAndQuartiles = this.getMedianAndQuartiles(sortedData)
+    let median = medianAndQuartiles.median
+    let q1 = medianAndQuartiles.q1
+    let q3 = medianAndQuartiles.q3
+
+    console.log('avg: ' + avg, ' min: ' + min, ' max: ' + max, ' stdDev: ' + stdDev, ' q1: ' + q1, ' median: ' + median, ' q3: ' + q3);
+
+    // categorize the data into groups and counts
+    let delim
+    if (this.data.mode === 'custom') delim = this.data.customHistoWidth
+    else if (this.data.mode === 'point') delim = false
+    else if (this.data.mode === 'stdDev') delim = stdDev
+
+    let groups = []
+    let counts = []
+    if (delim) {
+      groups = this.createGroups(min, delim, max - min)
+      counts = this.createCounts(groups, sortedData, delim)
+    } else {
+      groups = sortedData
+      counts = Array(sortedData.length).fill(1)
+    }
+
+    // REMINDER TO FIX POINT MODE IS WRONG DO FREKAING FORGET STUPID
+
+    console.log(groups, counts)
+
+    //create the boundaries for the histogram based on wether or not to show the stats on the chart
+    let grphBounds = {xi: 15, yi: 15, yf: this.data.bounds.yheight - 15}
+    if (this.data.showStats) Object.assign(grphBounds, {xf: this.data.bounds.xwidth * 7 / 10})
+    else Object.assign(grphBounds, {xf: this.data.bounds.xwidth - 15})
+    grphBounds.xwidth = grphBounds.xf - grphBounds.xi
+    grphBounds.yheight = grphBounds.yf - grphBounds.yi
+    rect(grphBounds.xi, grphBounds.yi, grphBounds.xf, grphBounds.yf)
+
+    let colWidth = grphBounds.xwidth / groups.length
+    let maxCount = Math.max.apply(null, counts)
+    for (let col in groups) {
+      let y = grphBounds.yf - ((grphBounds.yheight * 7 / 8) * (counts[col] / maxCount))
+      rect(colWidth * col + grphBounds.xi, grphBounds.yf, colWidth * col + colWidth + grphBounds.xi, y)
+    }
+
   }
-  
-  /**
-   */
+
+  createGroups(min, delim, range) {
+    let groups = []
+    for (let i = 0; i < range / delim; i++) {
+      groups.push(min + (delim * i))
+    }
+    return groups
+  }
+
+  createCounts(groups, data, delim) {
+    let counts = []
+    for (let i = 0; i < groups.length; i++) {
+      counts[i] = 0
+      for (let j in data) {
+        if (data[j] >= groups[i] && data[j] < groups[i] + delim) {
+          counts[i] += 1
+        }
+      }
+    }
+    return counts
+  }
+
+  getAvg(data) {
+    let sum = 0
+    for (let i in data) {
+      sum += data[i];
+    }
+    return sum / data.length;
+  }
+
+  getStdDev(data) {
+    let avg = this.getAvg(data)
+    let sumDifSquared = 0
+    for (let i in data) {
+      sumDifSquared += Math.pow((data[i] - avg), 2)
+    }
+    return Math.sqrt(sumDifSquared / data.length)
+  }
+
+  getSumOfNums(data) {
+    let total = 0
+    for (let i in data) total += data[i]
+    return total
+  }
+
+  getMedianAndQuartiles(data) {
+    let median, q1, q3
+    var mid = int(data.length / 2)
+    if (data.length % 2 == 1) {
+      median = data[mid]
+      q1 = this.middle(0, mid - 1, data)
+      q3 = this.middle(mid + 1, data.length - 1, data)
+    } else {
+      mid -= 1
+      median = (data[mid] + data[mid + 1]) / 2
+      q1 = this.middle(0, mid, data)
+      q3 = this.middle(mid + 1, data.length - 1, data)
+    }
+    return { 'median': median, 'q1': q1, 'q3': q3 }
+  }
+
+  middle(startPos, endPos, data) {
+    var range = endPos - startPos + 1;
+    if (range % 2 == 1) {
+      var elimsQ = int(range / 2);
+      return data[elimsQ + startPos];
+    } else {
+      var elimsQ = range / 2;
+      elimsQ += -1;
+      return (data[elimsQ + startPos] + data[elimsQ + startPos + 1]) / 2;
+    }
+  }
+
   drawLegend() {
     let len = Object.keys(this.data.slices.obj).length
 
@@ -598,11 +717,8 @@ class Graph {
       if (this.data.slices.measureType == 'percent') str += '%'
       text(str, x + 25, startY + (((endY - startY) / len) * i) + 5)
     }
-
   }
-  
-  /**
-   */
+
   drawPieChart() {
     let obj = this.data.slices.obj
     let bounds = this.data.bounds
@@ -635,8 +751,6 @@ class Graph {
       currentAng += angles[element]
       i++
     }
-
-    console.log(angles)
   }
 
   /**
@@ -658,7 +772,7 @@ class Graph {
     return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals)
   }
 
-  
+
   /**
    * @param  {Object} data in point form
    * @returns {Object} - [m,b] where {y = mx + b}
@@ -692,7 +806,7 @@ class Graph {
 
     return [m, b]
   }
-  
+
   /**
    * @param  {} slicesObj_
    * @param  {} measure_
@@ -701,5 +815,61 @@ class Graph {
     if (typeof slicesObj_ !== 'object') throw new Error('an object must be passed into slices()')
     this.data.slices.obj = slicesObj_
     this.data.slices.measureType = measure_
+  }
+
+  mode(mode_, customWidth_) {
+    console.log("MODE", mode_)
+    if (this.data.type != 'histogram') {
+      console.log('.mode() can only be used with histograms')
+      return
+    }
+    if (mode_ === 'points' || mode_ === 'stdDev' || mode_ === 'custom') {
+      this.data.mode = mode_
+      if (mode_ === 'custom') {
+        this.data.customHistoWidth = customWidth_
+      }
+    } else {
+      console.log('Acceptable modes are "points", "stddev", or "custom", you did not input one of these so the default of "stddev" is being used')
+      this.data.mode = 'stddev'
+    }
+  }
+
+  rmOutliers(bool_) {
+    if (this.data.type != 'histogram') {
+      console.log('.mormOutliersde() can only be used with histograms')
+      return
+    }
+    if (bool_ === true || bool_ === false) {
+      this.data.rmOutliers = bool_
+    }
+    else {
+      console.log('.rmOutliers() must be passed a Boolean')
+    }
+  }
+
+  addData(data_) {
+    if (this.data.type != 'histogram') {
+      console.log('.addData() can only be used with histograms')
+      return
+    }
+    let dataOkay = !data_.some(x => isNaN(x));
+    if (!dataOkay) {
+      console.log("data must be an array of numbers")
+      return
+    }
+    this.data.dataSet = data_
+  }
+
+  showStats(bool_) {
+    if (this.data.type != 'histogram') {
+      console.log('.showStats() can only be used with histograms')
+      return
+    }
+    if (bool_ === true || bool_ === false) {
+      this.data.showStats = bool_
+    }
+    else {
+      console.log('.showStats() must be passed a Boolean')
+    }
   }
 }

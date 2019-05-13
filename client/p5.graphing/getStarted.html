@@ -36,7 +36,8 @@
     <script src="../libraries/code-prettify/code-prettify.js"></script>
     <div class="content">
       <h1 id="home"><i>p5.graphing.js</i></h1>
-      <h3 style="margin-left:18px"> A library for p5.js <br> By <linky style="color:skyblue" onclick="window.location.href = 'about.html';">
+      <h3 style="margin-left:18px"> A library for p5.js <br> By <linky style="color:skyblue"
+          onclick="window.location.href = 'about.html';">
           Ethan DeGuire</linky>
       </h3>
 
@@ -53,53 +54,82 @@
               </a> <br>
       </fieldset>
       <fieldset id='documentation'>
-        <h1 style="font-size: 17px;"><b>Go to <linky style="color:skyblue" onclick="window.location.href = 'docs.html';">
+        <h1 style="font-size: 17px;"><b>Go to <linky style="color:skyblue"
+              onclick="window.location.href = 'docs.html';">
               Documentation</b></linky>
       </fieldset>
       <fieldset id=examples>
         <h9>EXAMPLES</h9><br>
 
-        <!-- Toggle Button for example 1 -->
-        <p1>Example 1 - xy Plane <input type="button" value="Show Code / Canvas"
-            onClick="showHideDiv('example1')" /></input></p1>
-        <!-- Example 1 div, for x-y plane -->
-        <fieldset id="example1" style="display: none">
-          <p>xy points and functions - included with complete download:</p>
+        <div id="ex.1">
+          <!-- Toggle Button for example 1 -->
+          <p1>Example 1 - xy Plane <input type="button" value="Show Code / Canvas"
+              onClick="showHideDiv('example1')" /></input></p1>
+          <!-- Example 1 div, for x-y plane -->
+          <fieldset id="example1" style="display: none">
+            <p>xy points and functions - included with complete download:</p>
 
-          <!-- Show the pretty HTML and JS -->
-          <div id="example1code">
-            <script>
-              prettyFile("samples/xySample.js", 'example1code')
-              prettyFile("samples/xySample.html", 'example1code')
-            </script>
-          </div>
+            <!-- Show the pretty HTML and JS -->
+            <div id="example1code">
+              <script>
+                prettyFile("samples/xySample.js", 'example1code')
+                prettyFile("samples/xySample.html", 'example1code')
+              </script>
+            </div>
 
-          <!-- Canvas running the example code -->
-          <iframe style="margin-left:50px" src="samples/xySample.html" style="-ms-flex-align: center; " frameborder="0"
-            scrolling="no" height="500px" width="500px"></iframe>
-        </fieldset>
+            <!-- Canvas running the example code -->
+            <iframe style="margin-left:50px" src="samples/xySample.html" style="-ms-flex-align: center; "
+              frameborder="0" scrolling="no" height="500px" width="500px"></iframe>
+          </fieldset>
+        </div>
 
         <br><br>
 
-        <!-- Toggle Button for example 1 -->
-        <p1>Example 2 - Pie Chart <input type="button" value="Show Code / Canvas"
-            onClick="showHideDiv('example2')" /></input></p1>
-        <!-- Example 2 div, for x-y plane -->
-        <fieldset id="example2" style="display: none">
-          <p>Pie Chart maker, included with complete download:</p>
+        <div id="ex.2">
+          <!-- Toggle Button for example 2 -->
+          <p1>Example 2 - Pie Chart <input type="button" value="Show Code / Canvas"
+              onClick="showHideDiv('example2')" /></input></p1>
+          <!-- Example 2 div, for x-y plane -->
+          <fieldset id="example2" style="display: none">
+            <p>Pie Chart maker, included with complete download:</p>
 
-          <!-- Show the pretty HTML and JS -->
-          <div id="example2code">
-            <script>
-              prettyFile("samples/pieSample.js", 'example2code')
-              prettyFile("samples/pieSample.html", 'example2code')
-            </script>
-          </div>
+            <!-- Show the pretty HTML and JS -->
+            <div id="example2code">
+              <script>
+                prettyFile("samples/pieSample.js", 'example2code')
+                prettyFile("samples/pieSample.html", 'example2code')
+              </script>
+            </div>
 
-          <!-- Canvas running the example code -->
-          <iframe style="margin-left:50px" src="samples/pieSample.html" style="-ms-flex-align: center; " frameborder="0"
-            scrolling="no" height="500px" width="500px"></iframe>
-        </fieldset>
+            <!-- Canvas running the example code -->
+            <iframe style="margin-left:50px" src="samples/pieSample.html" style="-ms-flex-align: center; "
+              frameborder="0" scrolling="no" height="500px" width="500px"></iframe>
+          </fieldset>
+        </div>
+
+        <br><br>
+
+        <div id="ex.3">
+          <!-- Toggle Button for example 3 -->
+          <p1>Example 3 - Histogram <input type="button" value="Show Code / Canvas"
+              onClick="showHideDiv('example3')" /></input></p1>
+          <!-- Example 2 div, for x-y plane -->
+          <fieldset id="example3" style="display: none">
+            <p>Histogram Creator, included with complete download:</p>
+
+            <!-- Show the pretty HTML and JS -->
+            <div id="example3code">
+              <script>
+                prettyFile("samples/histoSample.js", 'example3code')
+                prettyFile("samples/histoSample.html", 'example3code')
+              </script>
+            </div>
+
+            <!-- Canvas running the example code -->
+            <iframe style="margin-left:50px" src="samples/histoSample.html" style="-ms-flex-align: center; "
+              frameborder="0" scrolling="no" height="500px" width="500px"></iframe>
+          </fieldset>
+        </div>
 
       </fieldset>
     </div>
