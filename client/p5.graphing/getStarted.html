@@ -13,7 +13,7 @@
 </head>
 
 <body onload='loadscript("../libraries/code-prettify/code-prettify.js")'>
-  
+
   <!-- TOP NAVIGATION BAR -->
   <div class="w3-bar w3-black">
     <button class="w3-bar-item w3-button" onclick="window.location.href = 'docs.html';">Documentation</button>
@@ -60,17 +60,7 @@
       <fieldset id=examples>
         <h9>EXAMPLES</h9><br>
 
-        <fieldset id=Graph>
-          <h9>new Graph(type)</h9><br>
-          <p1>Creates a new graph object </p1>
-          <pre class="prettyprint">grph = new Graph('xy')</pre>
-          <p1> Currently available types: </p1>
-          <p>
-            -'xy': normal xy plane
-          </p>
-        </fieldset>
-
-        <div id="ex.1">
+        <div class='example' id="ex.1">
           <!-- Toggle Button for example 1 -->
           <p1>Example 1 - xy Plane <input type="button" value="Show Code / Canvas"
               onClick="showHideDiv('example1')" /></input></p1>
@@ -92,9 +82,7 @@
           </fieldset>
         </div>
 
-        <br><br>
-
-        <div id="ex.2">
+        <div class='example' id="ex.2">
           <!-- Toggle Button for example 2 -->
           <p1>Example 2 - Pie Chart <input type="button" value="Show Code / Canvas"
               onClick="showHideDiv('example2')" /></input></p1>
@@ -116,9 +104,7 @@
           </fieldset>
         </div>
 
-        <br><br>
-
-        <div id="ex.3">
+        <div class='example' id="ex.3">
           <!-- Toggle Button for example 3 -->
           <p1>Example 3 - Histogram <input type="button" value="Show Code / Canvas"
               onClick="showHideDiv('example3')" /></input></p1>
@@ -143,7 +129,7 @@
       </fieldset>
     </div>
   </div>
-  
+
 </body>
 
 </html>

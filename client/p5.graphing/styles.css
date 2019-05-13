@@ -73,33 +73,16 @@ body {
   padding-left: 20px;
 }
 
-linky:link {
-  color: green;
-  background-color: transparent;
-  text-decoration: none;
-}
-
-linky:visited {
-  color: pink;
-  background-color: transparent;
-  text-decoration: none;
-}
-
-linky:hover {
-  color: red;
-  background-color: transparent;
-  text-decoration: underline;
-}
-
-linky:active {
-  color: yellow;
-  background-color: transparent;
-  text-decoration: underline;
-}
-
 a {
   padding-left: 30px;
   color: aqua;
+}
+
+.example {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+  background-color: rgba(211, 211, 211, 0.12)
 }
 
 @media only screen and (max-width: 600px) {
