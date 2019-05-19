@@ -12,6 +12,9 @@ function prettyFile(file, parentDiv) {
       js.innerHTML = text
       document.getElementById(parentDiv).prepend(js)
     })
+    .then(() => {
+      return true
+    })
 }
 
 function replaceAll(str, find, replace) {

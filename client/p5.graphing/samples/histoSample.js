@@ -7,9 +7,11 @@ function setup() {
   
   // grph.mode('points')
   // grph.mode('stdDev')
-  grph.mode('custom', 1.51)
+  grph.mode('points')
 
-  grph.addData([1,2,3,4,5,6,7,8,9,10,10])
+  grph.colorMode({'fade':['BLACK','WHITE'], 'background':'PURPLE'})
+
+  grph.addData([1,2,2,2,3,3,3,3,3,4,4,4,5])
   
   grph.showStats(true)
 
