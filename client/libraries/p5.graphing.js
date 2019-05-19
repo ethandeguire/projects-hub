@@ -549,16 +549,15 @@ class Graph {
   }
 
   drawSocialGraph() {
+    smooth()
     let radius
     if (this.data.bounds.xwidth >= this.data.bounds.yheight) radius = (this.data.bounds.yheight / 2) - 50
-    else radius = (this.data.xwidth / 2) - 80
+    else radius = (this.data.bounds.xwidth / 2) - 30
 
     for (let name in this.data.jsonList) {
       let angle = (this.data.jsonList[name].id / this.data.jsonCount) * 2 * Math.PI
 
       fill(0)
-      // textAlign(CENTER)
-
       textAlign(CENTER)
 
       let offset = [0, 0]
@@ -567,136 +566,155 @@ class Graph {
           textAlign(LEFT, CENTER)
           offset = [2, 0]
           break
-
         case (angle > 0 && angle < Math.PI * 1 / 4):
           textAlign(LEFT, CENTER)
           offset = [3, 0]
           break
-
         case (angle == Math.PI * 1 / 4):
           textAlign(LEFT, CENTER)
           offset = [3, 1]
           break
-
         case (angle > Math.PI * 1 / 4 && angle < Math.PI * 2 / 4):
           textAlign(LEFT, TOP)
           offset = [2, 1]
           break
-
         case (angle == Math.PI * 2 / 4):
           textAlign(CENTER, TOP)
           offset = [0, 2]
           break
-
         case (angle > Math.PI * 2 / 4 && angle < Math.PI * 3 / 4):
           textAlign(RIGHT, TOP)
           offset = [-2, 1]
           break
-
         case (angle == Math.PI * 3 / 4):
           textAlign(RIGHT, CENTER)
           offset = [-3, 2]
           break
-
         case (angle > Math.PI * 3 / 4 && angle < Math.PI * 4 / 4):
           textAlign(RIGHT, CENTER)
           offset = [-3, 0]
           break
-
         case (angle == Math.PI * 4 / 4):
           textAlign(RIGHT, CENTER)
           offset = [-2, 0]
           break
-
         case (angle > Math.PI * 4 / 4 && angle < Math.PI * 5 / 4):
           textAlign(RIGHT, CENTER)
           offset = [-3, 0]
           break
-
         case (angle == Math.PI * 5 / 4):
           textAlign(RIGHT, CENTER)
           offset = [-3, -1]
           break
-
         case (angle > Math.PI * 5 / 4 && angle < Math.PI * 6 / 4):
           textAlign(RIGHT, BOTTOM)
           offset = [-2, -1]
           break
-
         case (angle == Math.PI * 6 / 4):
           textAlign(CENTER, BOTTOM)
           offset = [0, -1]
           break
-
         case (angle > Math.PI * 6 / 4 && angle < Math.PI * 7 / 4):
           textAlign(LEFT, BOTTOM)
           offset = [2, -1]
           break
-
         case (angle == Math.PI * 7 / 4):
           textAlign(LEFT, CENTER)
           offset = [2, -1]
           break
-
         case (angle > Math.PI * 7 / 4 && angle < Math.PI * 8 / 4):
           textAlign(LEFT, CENTER)
           offset = [2, -2]
           break
-
       }
 
       let x = Math.cos(angle) * radius + (this.data.bounds.xwidth / 2)
       let y = Math.sin(angle) * radius + (this.data.bounds.yheight / 2)
 
-
       noStroke(0)
       text(name, Math.cos(angle) * radius + (this.data.bounds.xwidth / 2) + offset[0], Math.sin(angle) * radius + (this.data.bounds.yheight / 2) + offset[1])
 
+      let peopleList = this.data.jsonList
+      let types = peopleList[name]
+      for (let type in types) {
+        if (type !== 'id') {
+          let people = types[type]
+          for (let optionsType in this.data.options.types) {
+            if (type === optionsType) {
+              let color = this.data.options.types[type].color
+              if (color == null) color = 'BLACK'
+              let directional = this.data.options.types[type].directional
+              if (directional == null) directional = false
+              for (let person of people) {
+                // angle is 2pi * the ratio of this persons number to the number of people
+                let angleOfPerson = (peopleList[person].id / this.data.jsonCount) * (2 * Math.PI)
+                let xf = Math.cos(angleOfPerson) * radius + (this.data.bounds.xwidth / 2)
+                let yf = Math.sin(angleOfPerson) * radius + (this.data.bounds.yheight / 2)
+                if (!directional) {
+                  strokeWeight(2)
+                  stroke(this.getColor(color))
+                  line(x, y, xf, yf)
+                }
+                else if (directional) {
+                  let reciprocated = false
+                  // draw solid line if relationship is reciprocated
+                  for (let personType in peopleList[person][type]) {
+                    if (name == peopleList[person][type][personType]) {
+                      reciprocated = true
+                      strokeWeight(2)
+                      stroke(this.getColor(color))
+                      line(x, y, xf, yf)
+                      break
+                    }
+                  }
 
-      for (let likes in this.data.jsonList[name].hasLiked) {
-        let person = this.data.jsonList[name].hasLiked[likes]
-        if (!this.data.jsonList[person]) break
-        let angleF = (this.data.jsonList[person].id / this.data.jsonCount) * 2 * Math.PI
-        let xf = Math.cos(angleF) * radius + (this.data.bounds.xwidth / 2)
-        let yf = Math.sin(angleF) * radius + (this.data.bounds.yheight / 2)
-        stroke(255, 0, 0)
-        line(x, y, xf, yf)
-        console.log()
+                  //draw arrows if unreciprocated
+                  if (!reciprocated) {
+                    this.arrows(x, y, xf, yf, color)
+                    // console.log(name, x, y, xf, yf)
+                  }
+                }
+              }
+            }
+          }
+        }
       }
 
-      for (let rels in this.data.jsonList[name].relationships) {
-        let person = this.data.jsonList[name].relationships[rels]
-        if (!this.data.jsonList[person]) break
-        let angleF = (this.data.jsonList[person].id / this.data.jsonCount) * 2 * Math.PI
-        let xf = Math.cos(angleF) * radius + (this.data.bounds.xwidth / 2)
-        let yf = Math.sin(angleF) * radius + (this.data.bounds.yheight / 2)
-        stroke(255, 255, 10)
-        line(x, y, xf, yf)
-        console.log()
-      }
-
-      ellipse(x, y, 3)
+      // ellipse(x, y, 3)
     }
 
     strokeWeight(0.05)
     noFill()
     ellipse(this.data.bounds.xwidth / 2, this.data.bounds.yheight / 2, radius * 2)
 
-    textSize(30)
-    strokeWeight(3)
-    stroke(0)
-    textAlign(RIGHT)
-    fill(255, 255, 10)
-    text('Relationship', this.data.bounds.xwidth - 10, 19)
-    fill(255, 0, 0)
-    text('Crush', this.data.bounds.xwidth - 10, 49)
+    let y = 0
+    for (let rel in this.data.options.types) {
+      fill(this.getColor(this.data.options.types[rel].color))
+      text(rel, 10, y+=20)
+    }
+  }
+
+  arrows(xi, yi, xf, yf, color) {
+    let pixelInterval = 10 //amount of pixels between arrows
+    let arrows = Math.sqrt(Math.pow(yf - yi, 2) + Math.pow(xf - xi, 2)) / pixelInterval
+    for (let i = 0; i < arrows; i++) {
+      let x = ((xf * i) + (xi * (arrows - i))) / arrows
+      let y = ((yf * i) + (yi * (arrows - i))) / arrows
+      let angle = Math.atan2((yf - yi), (xf - xi)) - (Math.PI / 2)
+      push()
+      translate(x, y)
+      rotate(angle)
+      stroke(this.getColor(color))
+      fill(this.getColor(color))
+      triangle(0, 0.8, -0.2, -0.2, 0.2, -0.2)
+      pop()
+    }
   }
 
   drawHisto() {
+    // Basic Stats
     let sum = this.getSumOfNums(this.data.dataSet)
     let sortedData = this.data.dataSet.sort((a, b) => a - b)
-
-    // Basic Stats
     let avg = sum / sortedData.length
     let min = sortedData[0]
     let max = sortedData[sortedData.length - 1]
@@ -706,6 +724,30 @@ class Graph {
     let q1 = medianAndQuartiles.q1
     let q3 = medianAndQuartiles.q3
 
+    if (this.data.rmOutliers) {
+
+      let top = q3 + (1.5 * (q3 - q1))
+      let bottom = q1 - (1.5 * (q3 - q1))
+      for (let i = this.data.dataSet.length - 1; i >= 0; i--) {
+        if (this.data.dataSet[i] > top || this.data.dataSet < bottom) {
+          this.data.dataSet.splice(i, 1)
+
+        }
+      }
+
+      sum = this.getSumOfNums(this.data.dataSet)
+      sortedData = this.data.dataSet.sort((a, b) => a - b)
+      avg = sum / sortedData.length
+      min = sortedData[0]
+      max = sortedData[sortedData.length - 1]
+      stdDev = this.getStdDev(sortedData)
+      medianAndQuartiles = this.getMedianAndQuartiles(sortedData)
+      median = medianAndQuartiles.median
+      q1 = medianAndQuartiles.q1
+      q3 = medianAndQuartiles.q3
+    }
+
+    this.data.stats = { 'avg': avg, 'min': min, 'max': max, 'stdDev': stdDev, 'q1': q1, 'median': median, 'q3': q3 }
     // console.log('avg: ' + avg, ' min: ' + min, ' max: ' + max, ' stdDev: ' + stdDev, ' q1: ' + q1, ' median: ' + median, ' q3: ' + q3);
 
     // categorize the data into groups and counts
@@ -734,10 +776,7 @@ class Graph {
       }
     }
 
-
-    // REMINDER TO FIX POINT MODE IS WRONG DONT FREKAING FORGET STUPID
-
-    console.log(groups, counts)
+    // console.log(groups, counts)
 
     //create the boundaries for the histogram based on wether or not to show the stats on the chart
     let grphBounds = { xi: 15, yi: 15, yf: this.data.bounds.yheight - 15 }
@@ -780,22 +819,6 @@ class Graph {
     return groups
   }
 
-  colorMode(obj_) {
-    if (this.data.type === 'histogram') {
-      this.data.customColors = {}
-      for (let key in obj_) {
-        console.log(key)
-        if (key === 'fade') {
-          this.data.customColors.startCol = this.getColor(obj_.fade[0])
-          this.data.customColors.endCol = this.getColor(obj_.fade[1])
-        }
-        if (key === 'background') {
-          this.data.customColors.backgroundCol = this.getColor(obj_.background)
-        }
-      }
-    }
-  }
-
   createCounts(groups, data, delim) {
     let counts = []
     for (let i = 0; i < groups.length; i++) {
@@ -807,6 +830,27 @@ class Graph {
       }
     }
     return counts
+  }
+
+  colorMode(obj_) {
+    if (this.data.type === 'histogram') {
+      this.data.customColors = {}
+      for (let key in obj_) {
+        switch (key) {
+          case 'fade':
+            this.data.customColors.startCol = this.getColor(obj_.fade[0])
+            this.data.customColors.endCol = this.getColor(obj_.fade[1])
+            break
+          case 'background':
+            this.data.customColors.backgroundCol = this.getColor(obj_.background)
+            break
+          case 'barColor':
+            this.data.customColors.startCol = this.getColor(obj_.barColor)
+            this.data.customColors.endCol = this.getColor(obj_.barColor)
+            break
+        }
+      }
+    }
   }
 
   getAvg(data) {
@@ -990,7 +1034,7 @@ class Graph {
     }
   }
 
-  addData(data_) {
+  addData(data_, options_) {
     if (this.data.type === 'histogram') {
       let dataOkay = !data_.some(x => isNaN(x));
       if (!dataOkay) {
@@ -1007,6 +1051,7 @@ class Graph {
       }
       this.data.jsonList = data_
       this.data.jsonCount = Object.keys(data_).length
+      this.data.options = options_
     }
   }
 
@@ -1021,5 +1066,11 @@ class Graph {
     else {
       console.log('.showStats() must be passed a Boolean')
     }
+  }
+
+  removeOutliers(bool_) {
+    if (this.data.type !== 'histogram') return
+
+    this.data.rmOutliers = bool_
   }
 }
