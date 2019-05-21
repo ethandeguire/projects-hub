@@ -1,11 +1,13 @@
 /* xySample.js */
+let grph
+
 function setup() {
   createCanvas(300, 300)
   // createCanvas(900, 900)
   pixelDensity(2)
   background(60)
 
-  let grph = new Graph('socialGraph')
+  grph = new Graph('socialGraph')
 
   let options = {
     types: {
@@ -55,6 +57,8 @@ function setup() {
     }
   }
 
+  console.log(options, data)
+
   grph.addData(data, options)
 
   // grph.canvasLocation(10, 10, 890, 890)
@@ -63,7 +67,26 @@ function setup() {
 }
 
 function save() {
-  
+
+}
+
+
+function handleFiles(file) {
+  let data, options
+  let reader = new FileReader();
+  reader.readAsText(file, 'UTF-8');
+  reader.onload = function (evt) {
+    let result = JSON.parse(evt.target.result)
+    console.log(result)
+    options = result.options
+    data = result.data
+
+    grph.addData(data, options)
+    grph.show()
+  }
+
+
+
 }
 
 function mousePressed() {
