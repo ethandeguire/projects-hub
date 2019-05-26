@@ -32,7 +32,8 @@ class Graph {
       this.data.mode = 'stddev'
     }
     else if (type_ === 'socialGraph') {
-
+      this.data.customPlacements = {}
+      this.data.selected = {}
     }
   }
 
@@ -515,13 +516,13 @@ class Graph {
   }
 
   show() {
-    // assume use of whole canvas
+    // assume use of whole canvas if bounds have not been provided
     if (!this.data.bounds) this.canvasLocation(0, 0, width, height)
     if (!this.data.backgroundCol) this.backgroundCol([255, 255, 255])
 
     console.log(this.data)
 
-    //  translate to allocated area to draw the xy data
+    //  translate to allocated area to draw the graph
     push()
     translate(this.data.bounds.xi, this.data.bounds.yi)
     fill(this.data.backgroundCol[0], this.data.backgroundCol[1], this.data.backgroundCol[2])
@@ -554,86 +555,95 @@ class Graph {
     if (this.data.bounds.xwidth >= this.data.bounds.yheight) radius = (this.data.bounds.yheight / 2) - 50
     else radius = (this.data.bounds.xwidth / 2) - 30
 
+    //draw lines:
     for (let name in this.data.jsonList) {
       let angle = (this.data.jsonList[name].id / this.data.jsonCount) * 2 * Math.PI
 
       fill(0)
       textAlign(CENTER)
 
+      let x, y
       let offset = [0, 0]
-      switch (true) {
-        case (angle == Math.PI * 0 / 4):
-          textAlign(LEFT, CENTER)
-          offset = [2, 0]
-          break
-        case (angle > 0 && angle < Math.PI * 1 / 4):
-          textAlign(LEFT, CENTER)
-          offset = [3, 0]
-          break
-        case (angle == Math.PI * 1 / 4):
-          textAlign(LEFT, CENTER)
-          offset = [3, 1]
-          break
-        case (angle > Math.PI * 1 / 4 && angle < Math.PI * 2 / 4):
-          textAlign(LEFT, TOP)
-          offset = [2, 1]
-          break
-        case (angle == Math.PI * 2 / 4):
-          textAlign(CENTER, TOP)
-          offset = [0, 2]
-          break
-        case (angle > Math.PI * 2 / 4 && angle < Math.PI * 3 / 4):
-          textAlign(RIGHT, TOP)
-          offset = [-2, 1]
-          break
-        case (angle == Math.PI * 3 / 4):
-          textAlign(RIGHT, CENTER)
-          offset = [-3, 2]
-          break
-        case (angle > Math.PI * 3 / 4 && angle < Math.PI * 4 / 4):
-          textAlign(RIGHT, CENTER)
-          offset = [-3, 0]
-          break
-        case (angle == Math.PI * 4 / 4):
-          textAlign(RIGHT, CENTER)
-          offset = [-2, 0]
-          break
-        case (angle > Math.PI * 4 / 4 && angle < Math.PI * 5 / 4):
-          textAlign(RIGHT, CENTER)
-          offset = [-3, 0]
-          break
-        case (angle == Math.PI * 5 / 4):
-          textAlign(RIGHT, CENTER)
-          offset = [-3, -1]
-          break
-        case (angle > Math.PI * 5 / 4 && angle < Math.PI * 6 / 4):
-          textAlign(RIGHT, BOTTOM)
-          offset = [-2, -1]
-          break
-        case (angle == Math.PI * 6 / 4):
-          textAlign(CENTER, BOTTOM)
-          offset = [0, -1]
-          break
-        case (angle > Math.PI * 6 / 4 && angle < Math.PI * 7 / 4):
-          textAlign(LEFT, BOTTOM)
-          offset = [2, -1]
-          break
-        case (angle == Math.PI * 7 / 4):
-          textAlign(LEFT, CENTER)
-          offset = [2, -1]
-          break
-        case (angle > Math.PI * 7 / 4 && angle < Math.PI * 8 / 4):
-          textAlign(LEFT, CENTER)
-          offset = [2, -2]
-          break
+
+      if (this.data.customPlacements[name]) {
+        // console.log(name, this.data.customPlacements[name])
+        [x, y] = this.data.customPlacements[name]
+      }
+      else {
+        switch (true) {
+          case (angle == Math.PI * 0 / 4):
+            textAlign(LEFT, CENTER)
+            offset = [2, 0]
+            break
+          case (angle > 0 && angle < Math.PI * 1 / 4):
+            textAlign(LEFT, CENTER)
+            offset = [3, 0]
+            break
+          case (angle == Math.PI * 1 / 4):
+            textAlign(LEFT, CENTER)
+            offset = [3, 1]
+            break
+          case (angle > Math.PI * 1 / 4 && angle < Math.PI * 2 / 4):
+            textAlign(LEFT, TOP)
+            offset = [2, 1]
+            break
+          case (angle == Math.PI * 2 / 4):
+            textAlign(CENTER, TOP)
+            offset = [0, 2]
+            break
+          case (angle > Math.PI * 2 / 4 && angle < Math.PI * 3 / 4):
+            textAlign(RIGHT, TOP)
+            offset = [-2, 1]
+            break
+          case (angle == Math.PI * 3 / 4):
+            textAlign(RIGHT, CENTER)
+            offset = [-3, 2]
+            break
+          case (angle > Math.PI * 3 / 4 && angle < Math.PI * 4 / 4):
+            textAlign(RIGHT, CENTER)
+            offset = [-3, 0]
+            break
+          case (angle == Math.PI * 4 / 4):
+            textAlign(RIGHT, CENTER)
+            offset = [-2, 0]
+            break
+          case (angle > Math.PI * 4 / 4 && angle < Math.PI * 5 / 4):
+            textAlign(RIGHT, CENTER)
+            offset = [-3, 0]
+            break
+          case (angle == Math.PI * 5 / 4):
+            textAlign(RIGHT, CENTER)
+            offset = [-3, -1]
+            break
+          case (angle > Math.PI * 5 / 4 && angle < Math.PI * 6 / 4):
+            textAlign(RIGHT, BOTTOM)
+            offset = [-2, -1]
+            break
+          case (angle == Math.PI * 6 / 4):
+            textAlign(CENTER, BOTTOM)
+            offset = [0, -1]
+            break
+          case (angle > Math.PI * 6 / 4 && angle < Math.PI * 7 / 4):
+            textAlign(LEFT, BOTTOM)
+            offset = [2, -1]
+            break
+          case (angle == Math.PI * 7 / 4):
+            textAlign(LEFT, CENTER)
+            offset = [2, -1]
+            break
+          case (angle > Math.PI * 7 / 4 && angle < Math.PI * 8 / 4):
+            textAlign(LEFT, CENTER)
+            offset = [2, -2]
+            break
+        }
+
+        x = Math.cos(angle) * radius + (this.data.bounds.xwidth / 2)
+        y = Math.sin(angle) * radius + (this.data.bounds.yheight / 2)
       }
 
-      let x = Math.cos(angle) * radius + (this.data.bounds.xwidth / 2)
-      let y = Math.sin(angle) * radius + (this.data.bounds.yheight / 2)
+      this.data.jsonList[name].coords = [x, y]
 
       noStroke(0)
-      text(name, Math.cos(angle) * radius + (this.data.bounds.xwidth / 2) + offset[0], Math.sin(angle) * radius + (this.data.bounds.yheight / 2) + offset[1])
-
       let peopleList = this.data.jsonList
       let types = peopleList[name]
       for (let type in types) {
@@ -647,9 +657,15 @@ class Graph {
               if (directional == null) directional = false
               for (let person of people) {
                 // angle is 2pi * the ratio of this persons number to the number of people
-                let angleOfPerson = (peopleList[person].id / this.data.jsonCount) * (2 * Math.PI)
-                let xf = Math.cos(angleOfPerson) * radius + (this.data.bounds.xwidth / 2)
-                let yf = Math.sin(angleOfPerson) * radius + (this.data.bounds.yheight / 2)
+                let xf, yf
+                if (this.data.customPlacements[person]) {
+                  [xf, yf] = this.data.customPlacements[person]
+                }
+                else {
+                  let angleOfPerson = (peopleList[person].id / this.data.jsonCount) * (2 * Math.PI)
+                  xf = Math.cos(angleOfPerson) * radius + (this.data.bounds.xwidth / 2)
+                  yf = Math.sin(angleOfPerson) * radius + (this.data.bounds.yheight / 2)
+                }
                 if (!directional) {
                   strokeWeight(2)
                   stroke(this.getColor(color))
@@ -683,14 +699,20 @@ class Graph {
       // ellipse(x, y, 3)
     }
 
-    strokeWeight(0.05)
-    noFill()
-    ellipse(this.data.bounds.xwidth / 2, this.data.bounds.yheight / 2, radius * 2)
+    //draw names:
+    for (let name in this.data.jsonList) {
+      fill(0)
+      stroke(255)
+      strokeWeight(0.15)
+      text(name, this.data.jsonList[name].coords[0], this.data.jsonList[name].coords[1])
+    }
 
+    // draw labels
     let y = 0
     for (let rel in this.data.options.types) {
       fill(this.getColor(this.data.options.types[rel].color))
-      text(rel, 10, y+=20)
+      noStroke()
+      text(rel, 10, y += 20)
     }
   }
 
@@ -1072,5 +1094,32 @@ class Graph {
     if (this.data.type !== 'histogram') return
 
     this.data.rmOutliers = bool_
+  }
+
+  mouseClicked() {
+    if (this.data.type === 'socialGraph') {
+      if (mouseX < 10 && mouseY < 10 && mouseX >= 0 && mouseY >= 0) save()
+
+      if (!this.data.selected) {
+        for (let name in this.data.jsonList) {
+          let [w, z] = this.data.jsonList[name].coords
+          let [x, y] = [w + this.data.bounds.xi, z + this.data.bounds.yi]
+          if (mouseX >= x - 30 && mouseX <= x + 30 && mouseY >= y - 30 && mouseY <= y + 30) {
+            this.data.selected = name
+            break
+          }
+        }
+      } else {
+        this.data.customPlacements[this.data.selected] = [mouseX - this.data.bounds.xi, mouseY - this.data.bounds.yi]
+        this.show()
+        this.data.selected = null
+      }
+    }
+  }
+
+  mouseReleased() {
+    if (this.data.type === 'socialGraph') {
+      this.data.selected = null
+    }
   }
 }

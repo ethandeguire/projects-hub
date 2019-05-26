@@ -57,19 +57,12 @@ function setup() {
     }
   }
 
-  console.log(options, data)
-
   grph.addData(data, options)
 
   // grph.canvasLocation(10, 10, 890, 890)
   grph.canvasLocation(10, 10, 290, 290)
   grph.show()
 }
-
-function save() {
-
-}
-
 
 function handleFiles(file) {
   let data, options
@@ -84,11 +77,13 @@ function handleFiles(file) {
     grph.addData(data, options)
     grph.show()
   }
-
-
-
 }
 
-function mousePressed() {
-  if (mouseX < 10 && mouseY < 10 && mouseX >= 0 && mouseY >= 0) save()
+function mouseDragged(){
+  grph.mouseClicked()
 }
+
+function mouseReleased(){
+  grph.mouseReleased()
+}
+
