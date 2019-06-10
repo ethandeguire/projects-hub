@@ -30,6 +30,7 @@ class Graph {
     }
     else if (type_ === 'histogram') {
       this.data.mode = 'stddev'
+      this.data.stdDevType = 'population'
     }
     else if (type_ === 'socialGraph') {
       this.data.customPlacements = {}
@@ -733,21 +734,35 @@ class Graph {
     }
   }
 
-  drawHisto() {
+  calculateBasicStats(dataSet) {
     // Basic Stats
-    let sum = this.getSumOfNums(this.data.dataSet)
-    let sortedData = this.data.dataSet.sort((a, b) => a - b)
+    let sum = this.getSumOfNums(dataSet)
+    let sortedData = dataSet.sort((a, b) => a - b)
     let avg = sum / sortedData.length
     let min = sortedData[0]
     let max = sortedData[sortedData.length - 1]
-    let stdDev = this.getStdDev(sortedData)
+    let stdDev = this.getStdDev(sortedData, this.data.stdDevType)
     let medianAndQuartiles = this.getMedianAndQuartiles(sortedData)
     let median = medianAndQuartiles.median
     let q1 = medianAndQuartiles.q1
     let q3 = medianAndQuartiles.q3
 
-    if (this.data.rmOutliers) {
+    return { 'sum': sum, 'sortedData': sortedData, 'avg': avg, 'min': min, 'max': max, 'stdDev': stdDev, 'q1': q1, 'median': median, 'q3': q3 }
+  }
 
+  drawHisto() {
+    let stats = this.calculateBasicStats(this.data.dataSet)
+    let sum = stats.sum
+    let sortedData = stats.sortedData
+    let avg = stats.avg
+    let min = stats.min
+    let max = stats.max
+    let stdDev = stats.stdDev
+    let median = stats.median
+    let q1 = stats.q1
+    let q3 = stats.q3
+
+    if (this.data.rmOutliers) {
       let top = q3 + (1.5 * (q3 - q1))
       let bottom = q1 - (1.5 * (q3 - q1))
       for (let i = this.data.dataSet.length - 1; i >= 0; i--) {
@@ -757,20 +772,21 @@ class Graph {
         }
       }
 
-      sum = this.getSumOfNums(this.data.dataSet)
-      sortedData = this.data.dataSet.sort((a, b) => a - b)
-      avg = sum / sortedData.length
-      min = sortedData[0]
-      max = sortedData[sortedData.length - 1]
-      stdDev = this.getStdDev(sortedData)
-      medianAndQuartiles = this.getMedianAndQuartiles(sortedData)
-      median = medianAndQuartiles.median
-      q1 = medianAndQuartiles.q1
-      q3 = medianAndQuartiles.q3
+      let withoutOuliers = this.calculateBasicStats(this.data.dataSet)
+      sum = withoutOuliers.sum
+      sortedData = withoutOuliers.sortedData
+      avg = withoutOuliers.avg
+      min = withoutOuliers.min
+      max = withoutOuliers.max
+      stdDev = withoutOuliers.stdDev
+      median = withoutOuliers.median
+      q1 = withoutOuliers.q1
+      q3 = withoutOuliers.q3
     }
 
-    this.data.stats = { 'avg': avg, 'min': min, 'max': max, 'stdDev': stdDev, 'q1': q1, 'median': median, 'q3': q3 }
+    this.data.stats = { 'sum': sum, 'avg': avg, 'min': min, 'max': max, 'stdDev': stdDev, 'q1': q1, 'median': median, 'q3': q3 }
     // console.log('avg: ' + avg, ' min: ' + min, ' max: ' + max, ' stdDev: ' + stdDev, ' q1: ' + q1, ' median: ' + median, ' q3: ' + q3);
+    // console.log(this.data.stats)
 
     // categorize the data into groups and counts
     let delim
@@ -804,6 +820,7 @@ class Graph {
     let grphBounds = { xi: 15, yi: 15, yf: this.data.bounds.yheight - 15 }
     if (this.data.showStats) Object.assign(grphBounds, { xf: this.data.bounds.xwidth * 7 / 10 })
     else Object.assign(grphBounds, { xf: this.data.bounds.xwidth - 15 })
+
     grphBounds.xwidth = grphBounds.xf - grphBounds.xi
     grphBounds.yheight = grphBounds.yf - grphBounds.yi
     if (this.data.customColors) {
@@ -831,6 +848,17 @@ class Graph {
       rect(colWidth * column + grphBounds.xi, grphBounds.yf, colWidth * column + colWidth + grphBounds.xi, y)
     }
 
+    if (this.data.showStats) {
+      let i = 0
+      fill(0)
+      textSize(25)
+      for (let stat in this.data.stats) {
+        console.log(stat)
+        // text(stat, grphBounds.xf + 100, grphBounds.yheight / Object.keys(this.data.stats).length)
+        text(stat + ':' + this.roundTo(this.data.stats[stat], 4), grphBounds.xf + 10, this.data.bounds.yheight / 9 + (i * grphBounds.yheight / Object.keys(this.data.stats).length))
+        i++
+      }
+    }
   }
 
   createGroups(min, delim, range) {
@@ -839,6 +867,14 @@ class Graph {
       groups.push(min + (delim * i))
     }
     return groups
+  }
+
+  setStdDevType(type) {
+    if (type === 'population' || type === 'sample') {
+      this.data.stdDevType = type
+    } else {
+      console.log(type + " is not a valid stddev type, use 'population' or 'sample', defaulting to '" + this.data.stdDevType + "'")
+    }
   }
 
   createCounts(groups, data, delim) {
@@ -883,13 +919,14 @@ class Graph {
     return sum / data.length;
   }
 
-  getStdDev(data) {
+  getStdDev(data, type) {
     let avg = this.getAvg(data)
     let sumDifSquared = 0
     for (let i in data) {
       sumDifSquared += Math.pow((data[i] - avg), 2)
     }
-    return Math.sqrt(sumDifSquared / data.length)
+    if (type === 'population') return Math.sqrt(sumDifSquared / data.length)
+    else if (type === 'sample') return Math.sqrt(sumDifSquared / (data.length - 1))
   }
 
   getSumOfNums(data) {
@@ -1058,12 +1095,17 @@ class Graph {
 
   addData(data_, options_) {
     if (this.data.type === 'histogram') {
+
+      // if data is not in an array, make an array out of all the arguments
+      if (!Array.isArray(data_)) data_ = Array.prototype.slice.call(arguments)
+
       let dataOkay = !data_.some(x => isNaN(x));
       if (!dataOkay) {
         console.log("data must be an array of numbers")
         return
       }
       this.data.dataSet = data_
+
     }
     if (this.data.type === 'socialGraph') {
       // assign IDs to all of the people
