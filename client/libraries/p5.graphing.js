@@ -30,9 +30,11 @@ class Graph {
     }
     else if (type_ === 'histogram') {
       this.data.mode = 'stddev'
+      this.data.stdDevType = 'population'
     }
     else if (type_ === 'socialGraph') {
-
+      this.data.customPlacements = {}
+      this.data.selected = {}
     }
   }
 
@@ -515,13 +517,13 @@ class Graph {
   }
 
   show() {
-    // assume use of whole canvas
+    // assume use of whole canvas if bounds have not been provided
     if (!this.data.bounds) this.canvasLocation(0, 0, width, height)
     if (!this.data.backgroundCol) this.backgroundCol([255, 255, 255])
 
     console.log(this.data)
 
-    //  translate to allocated area to draw the xy data
+    //  translate to allocated area to draw the graph
     push()
     translate(this.data.bounds.xi, this.data.bounds.yi)
     fill(this.data.backgroundCol[0], this.data.backgroundCol[1], this.data.backgroundCol[2])
@@ -554,86 +556,95 @@ class Graph {
     if (this.data.bounds.xwidth >= this.data.bounds.yheight) radius = (this.data.bounds.yheight / 2) - 50
     else radius = (this.data.bounds.xwidth / 2) - 30
 
+    //draw lines:
     for (let name in this.data.jsonList) {
       let angle = (this.data.jsonList[name].id / this.data.jsonCount) * 2 * Math.PI
 
       fill(0)
       textAlign(CENTER)
 
+      let x, y
       let offset = [0, 0]
-      switch (true) {
-        case (angle == Math.PI * 0 / 4):
-          textAlign(LEFT, CENTER)
-          offset = [2, 0]
-          break
-        case (angle > 0 && angle < Math.PI * 1 / 4):
-          textAlign(LEFT, CENTER)
-          offset = [3, 0]
-          break
-        case (angle == Math.PI * 1 / 4):
-          textAlign(LEFT, CENTER)
-          offset = [3, 1]
-          break
-        case (angle > Math.PI * 1 / 4 && angle < Math.PI * 2 / 4):
-          textAlign(LEFT, TOP)
-          offset = [2, 1]
-          break
-        case (angle == Math.PI * 2 / 4):
-          textAlign(CENTER, TOP)
-          offset = [0, 2]
-          break
-        case (angle > Math.PI * 2 / 4 && angle < Math.PI * 3 / 4):
-          textAlign(RIGHT, TOP)
-          offset = [-2, 1]
-          break
-        case (angle == Math.PI * 3 / 4):
-          textAlign(RIGHT, CENTER)
-          offset = [-3, 2]
-          break
-        case (angle > Math.PI * 3 / 4 && angle < Math.PI * 4 / 4):
-          textAlign(RIGHT, CENTER)
-          offset = [-3, 0]
-          break
-        case (angle == Math.PI * 4 / 4):
-          textAlign(RIGHT, CENTER)
-          offset = [-2, 0]
-          break
-        case (angle > Math.PI * 4 / 4 && angle < Math.PI * 5 / 4):
-          textAlign(RIGHT, CENTER)
-          offset = [-3, 0]
-          break
-        case (angle == Math.PI * 5 / 4):
-          textAlign(RIGHT, CENTER)
-          offset = [-3, -1]
-          break
-        case (angle > Math.PI * 5 / 4 && angle < Math.PI * 6 / 4):
-          textAlign(RIGHT, BOTTOM)
-          offset = [-2, -1]
-          break
-        case (angle == Math.PI * 6 / 4):
-          textAlign(CENTER, BOTTOM)
-          offset = [0, -1]
-          break
-        case (angle > Math.PI * 6 / 4 && angle < Math.PI * 7 / 4):
-          textAlign(LEFT, BOTTOM)
-          offset = [2, -1]
-          break
-        case (angle == Math.PI * 7 / 4):
-          textAlign(LEFT, CENTER)
-          offset = [2, -1]
-          break
-        case (angle > Math.PI * 7 / 4 && angle < Math.PI * 8 / 4):
-          textAlign(LEFT, CENTER)
-          offset = [2, -2]
-          break
+
+      if (this.data.customPlacements[name]) {
+        // console.log(name, this.data.customPlacements[name])
+        [x, y] = this.data.customPlacements[name]
+      }
+      else {
+        switch (true) {
+          case (angle == Math.PI * 0 / 4):
+            textAlign(LEFT, CENTER)
+            offset = [2, 0]
+            break
+          case (angle > 0 && angle < Math.PI * 1 / 4):
+            textAlign(LEFT, CENTER)
+            offset = [3, 0]
+            break
+          case (angle == Math.PI * 1 / 4):
+            textAlign(LEFT, CENTER)
+            offset = [3, 1]
+            break
+          case (angle > Math.PI * 1 / 4 && angle < Math.PI * 2 / 4):
+            textAlign(LEFT, TOP)
+            offset = [2, 1]
+            break
+          case (angle == Math.PI * 2 / 4):
+            textAlign(CENTER, TOP)
+            offset = [0, 2]
+            break
+          case (angle > Math.PI * 2 / 4 && angle < Math.PI * 3 / 4):
+            textAlign(RIGHT, TOP)
+            offset = [-2, 1]
+            break
+          case (angle == Math.PI * 3 / 4):
+            textAlign(RIGHT, CENTER)
+            offset = [-3, 2]
+            break
+          case (angle > Math.PI * 3 / 4 && angle < Math.PI * 4 / 4):
+            textAlign(RIGHT, CENTER)
+            offset = [-3, 0]
+            break
+          case (angle == Math.PI * 4 / 4):
+            textAlign(RIGHT, CENTER)
+            offset = [-2, 0]
+            break
+          case (angle > Math.PI * 4 / 4 && angle < Math.PI * 5 / 4):
+            textAlign(RIGHT, CENTER)
+            offset = [-3, 0]
+            break
+          case (angle == Math.PI * 5 / 4):
+            textAlign(RIGHT, CENTER)
+            offset = [-3, -1]
+            break
+          case (angle > Math.PI * 5 / 4 && angle < Math.PI * 6 / 4):
+            textAlign(RIGHT, BOTTOM)
+            offset = [-2, -1]
+            break
+          case (angle == Math.PI * 6 / 4):
+            textAlign(CENTER, BOTTOM)
+            offset = [0, -1]
+            break
+          case (angle > Math.PI * 6 / 4 && angle < Math.PI * 7 / 4):
+            textAlign(LEFT, BOTTOM)
+            offset = [2, -1]
+            break
+          case (angle == Math.PI * 7 / 4):
+            textAlign(LEFT, CENTER)
+            offset = [2, -1]
+            break
+          case (angle > Math.PI * 7 / 4 && angle < Math.PI * 8 / 4):
+            textAlign(LEFT, CENTER)
+            offset = [2, -2]
+            break
+        }
+
+        x = Math.cos(angle) * radius + (this.data.bounds.xwidth / 2)
+        y = Math.sin(angle) * radius + (this.data.bounds.yheight / 2)
       }
 
-      let x = Math.cos(angle) * radius + (this.data.bounds.xwidth / 2)
-      let y = Math.sin(angle) * radius + (this.data.bounds.yheight / 2)
+      this.data.jsonList[name].coords = [x, y]
 
       noStroke(0)
-      text(name, Math.cos(angle) * radius + (this.data.bounds.xwidth / 2) + offset[0], Math.sin(angle) * radius + (this.data.bounds.yheight / 2) + offset[1])
-
       let peopleList = this.data.jsonList
       let types = peopleList[name]
       for (let type in types) {
@@ -647,9 +658,15 @@ class Graph {
               if (directional == null) directional = false
               for (let person of people) {
                 // angle is 2pi * the ratio of this persons number to the number of people
-                let angleOfPerson = (peopleList[person].id / this.data.jsonCount) * (2 * Math.PI)
-                let xf = Math.cos(angleOfPerson) * radius + (this.data.bounds.xwidth / 2)
-                let yf = Math.sin(angleOfPerson) * radius + (this.data.bounds.yheight / 2)
+                let xf, yf
+                if (this.data.customPlacements[person]) {
+                  [xf, yf] = this.data.customPlacements[person]
+                }
+                else {
+                  let angleOfPerson = (peopleList[person].id / this.data.jsonCount) * (2 * Math.PI)
+                  xf = Math.cos(angleOfPerson) * radius + (this.data.bounds.xwidth / 2)
+                  yf = Math.sin(angleOfPerson) * radius + (this.data.bounds.yheight / 2)
+                }
                 if (!directional) {
                   strokeWeight(2)
                   stroke(this.getColor(color))
@@ -683,14 +700,20 @@ class Graph {
       // ellipse(x, y, 3)
     }
 
-    strokeWeight(0.05)
-    noFill()
-    ellipse(this.data.bounds.xwidth / 2, this.data.bounds.yheight / 2, radius * 2)
+    //draw names:
+    for (let name in this.data.jsonList) {
+      fill(0)
+      stroke(255)
+      strokeWeight(0.15)
+      text(name, this.data.jsonList[name].coords[0], this.data.jsonList[name].coords[1])
+    }
 
+    // draw labels
     let y = 0
     for (let rel in this.data.options.types) {
       fill(this.getColor(this.data.options.types[rel].color))
-      text(rel, 10, y+=20)
+      noStroke()
+      text(rel, 10, y += 20)
     }
   }
 
@@ -711,21 +734,35 @@ class Graph {
     }
   }
 
-  drawHisto() {
+  calculateBasicStats(dataSet) {
     // Basic Stats
-    let sum = this.getSumOfNums(this.data.dataSet)
-    let sortedData = this.data.dataSet.sort((a, b) => a - b)
+    let sum = this.getSumOfNums(dataSet)
+    let sortedData = dataSet.sort((a, b) => a - b)
     let avg = sum / sortedData.length
     let min = sortedData[0]
     let max = sortedData[sortedData.length - 1]
-    let stdDev = this.getStdDev(sortedData)
+    let stdDev = this.getStdDev(sortedData, this.data.stdDevType)
     let medianAndQuartiles = this.getMedianAndQuartiles(sortedData)
     let median = medianAndQuartiles.median
     let q1 = medianAndQuartiles.q1
     let q3 = medianAndQuartiles.q3
 
-    if (this.data.rmOutliers) {
+    return { 'sum': sum, 'sortedData': sortedData, 'avg': avg, 'min': min, 'max': max, 'stdDev': stdDev, 'q1': q1, 'median': median, 'q3': q3 }
+  }
 
+  drawHisto() {
+    let stats = this.calculateBasicStats(this.data.dataSet)
+    let sum = stats.sum
+    let sortedData = stats.sortedData
+    let avg = stats.avg
+    let min = stats.min
+    let max = stats.max
+    let stdDev = stats.stdDev
+    let median = stats.median
+    let q1 = stats.q1
+    let q3 = stats.q3
+
+    if (this.data.rmOutliers) {
       let top = q3 + (1.5 * (q3 - q1))
       let bottom = q1 - (1.5 * (q3 - q1))
       for (let i = this.data.dataSet.length - 1; i >= 0; i--) {
@@ -735,20 +772,21 @@ class Graph {
         }
       }
 
-      sum = this.getSumOfNums(this.data.dataSet)
-      sortedData = this.data.dataSet.sort((a, b) => a - b)
-      avg = sum / sortedData.length
-      min = sortedData[0]
-      max = sortedData[sortedData.length - 1]
-      stdDev = this.getStdDev(sortedData)
-      medianAndQuartiles = this.getMedianAndQuartiles(sortedData)
-      median = medianAndQuartiles.median
-      q1 = medianAndQuartiles.q1
-      q3 = medianAndQuartiles.q3
+      let withoutOuliers = this.calculateBasicStats(this.data.dataSet)
+      sum = withoutOuliers.sum
+      sortedData = withoutOuliers.sortedData
+      avg = withoutOuliers.avg
+      min = withoutOuliers.min
+      max = withoutOuliers.max
+      stdDev = withoutOuliers.stdDev
+      median = withoutOuliers.median
+      q1 = withoutOuliers.q1
+      q3 = withoutOuliers.q3
     }
 
-    this.data.stats = { 'avg': avg, 'min': min, 'max': max, 'stdDev': stdDev, 'q1': q1, 'median': median, 'q3': q3 }
+    this.data.stats = { 'sum': sum, 'avg': avg, 'min': min, 'max': max, 'stdDev': stdDev, 'q1': q1, 'median': median, 'q3': q3 }
     // console.log('avg: ' + avg, ' min: ' + min, ' max: ' + max, ' stdDev: ' + stdDev, ' q1: ' + q1, ' median: ' + median, ' q3: ' + q3);
+    // console.log(this.data.stats)
 
     // categorize the data into groups and counts
     let delim
@@ -782,6 +820,7 @@ class Graph {
     let grphBounds = { xi: 15, yi: 15, yf: this.data.bounds.yheight - 15 }
     if (this.data.showStats) Object.assign(grphBounds, { xf: this.data.bounds.xwidth * 7 / 10 })
     else Object.assign(grphBounds, { xf: this.data.bounds.xwidth - 15 })
+
     grphBounds.xwidth = grphBounds.xf - grphBounds.xi
     grphBounds.yheight = grphBounds.yf - grphBounds.yi
     if (this.data.customColors) {
@@ -809,6 +848,17 @@ class Graph {
       rect(colWidth * column + grphBounds.xi, grphBounds.yf, colWidth * column + colWidth + grphBounds.xi, y)
     }
 
+    if (this.data.showStats) {
+      let i = 0
+      fill(0)
+      textSize(25)
+      for (let stat in this.data.stats) {
+        console.log(stat)
+        // text(stat, grphBounds.xf + 100, grphBounds.yheight / Object.keys(this.data.stats).length)
+        text(stat + ':' + this.roundTo(this.data.stats[stat], 4), grphBounds.xf + 10, this.data.bounds.yheight / 9 + (i * grphBounds.yheight / Object.keys(this.data.stats).length))
+        i++
+      }
+    }
   }
 
   createGroups(min, delim, range) {
@@ -817,6 +867,14 @@ class Graph {
       groups.push(min + (delim * i))
     }
     return groups
+  }
+
+  setStdDevType(type) {
+    if (type === 'population' || type === 'sample') {
+      this.data.stdDevType = type
+    } else {
+      console.log(type + " is not a valid stddev type, use 'population' or 'sample', defaulting to '" + this.data.stdDevType + "'")
+    }
   }
 
   createCounts(groups, data, delim) {
@@ -861,13 +919,14 @@ class Graph {
     return sum / data.length;
   }
 
-  getStdDev(data) {
+  getStdDev(data, type) {
     let avg = this.getAvg(data)
     let sumDifSquared = 0
     for (let i in data) {
       sumDifSquared += Math.pow((data[i] - avg), 2)
     }
-    return Math.sqrt(sumDifSquared / data.length)
+    if (type === 'population') return Math.sqrt(sumDifSquared / data.length)
+    else if (type === 'sample') return Math.sqrt(sumDifSquared / (data.length - 1))
   }
 
   getSumOfNums(data) {
@@ -1036,12 +1095,17 @@ class Graph {
 
   addData(data_, options_) {
     if (this.data.type === 'histogram') {
+
+      // if data is not in an array, make an array out of all the arguments
+      if (!Array.isArray(data_)) data_ = Array.prototype.slice.call(arguments)
+
       let dataOkay = !data_.some(x => isNaN(x));
       if (!dataOkay) {
         console.log("data must be an array of numbers")
         return
       }
       this.data.dataSet = data_
+
     }
     if (this.data.type === 'socialGraph') {
       // assign IDs to all of the people
@@ -1072,5 +1136,32 @@ class Graph {
     if (this.data.type !== 'histogram') return
 
     this.data.rmOutliers = bool_
+  }
+
+  mouseClicked() {
+    if (this.data.type === 'socialGraph') {
+      if (mouseX < 10 && mouseY < 10 && mouseX >= 0 && mouseY >= 0) save()
+
+      if (!this.data.selected) {
+        for (let name in this.data.jsonList) {
+          let [w, z] = this.data.jsonList[name].coords
+          let [x, y] = [w + this.data.bounds.xi, z + this.data.bounds.yi]
+          if (mouseX >= x - 30 && mouseX <= x + 30 && mouseY >= y - 30 && mouseY <= y + 30) {
+            this.data.selected = name
+            break
+          }
+        }
+      } else {
+        this.data.customPlacements[this.data.selected] = [mouseX - this.data.bounds.xi, mouseY - this.data.bounds.yi]
+        this.show()
+        this.data.selected = null
+      }
+    }
+  }
+
+  mouseReleased() {
+    if (this.data.type === 'socialGraph') {
+      this.data.selected = null
+    }
   }
 }
