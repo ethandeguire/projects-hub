@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Laws of Sines and Cosines</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="../libraries/p5.min.js"></script>
+<script src="script.js"></script>
+<script src="helperfuncs.js"></script>
+<style>
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Lato", sans-serif
+  }
+
+  .w3-bar,
+  h1,
+  button {
+    font-family: "Montserrat", sans-serif
+  }
+
+  .fa-anchor,
+  .fa-coffee {
+    font-size: 200px
+  }
+
+  .numInput {
+    display: block;
+    padding: 3px 0px;
+    margin-left: 10px;
+  }
+
+  .triangletype {
+    padding-left: 20%;
+  }
+
+  .mybtn {
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  p {
+    font-size: 16px;
+    display: block;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+  .foto {
+    padding-left: 20%;
+  }
+
+  .tab {
+    margin-left:40px;
+  }
+</style>
+
+<body>
+  <!-- Header -->
+  <header class="w3-container w3-red w3-center" style="padding:128px 16px; max-height: 500px">
+    <h1 class="w3-margin w3-jumbo">Triangle Calculator</h1>
+    <p class="w3-xlarge">To assist you in your understanding of triangles and the laws of sines and cosines</p>
+    <!-- <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Get Started</button> -->
+  </header>
+
+  <img class='foto' src="https://i.imgur.com/IbI2Ur0.png">
+
+
+  <div id="SSA" class="triangletype">
+    <h1>SSA</h1>
+    <div class="numInput"> Side 'a': <input id="a" name="SSAINPUT" type="number"></div>
+    <div class="numInput"> Side 'b': <input id="b" name="SSAINPUT" type="number"></div>
+    <div class="numInput"> Angle 'A': <input id="A" name="SSAINPUT" type="number"></div>
+    <button class="mybtn" onclick="calculate('SSAINPUT')">Calculate</button>
+  </div>
+
+
+  <div id="SSS" class="triangletype">
+    <h1>SSS</h1>
+    <div class="numInput"> Side 'a': <input id="a" name="SSSINPUT" type="number"></div>
+    <div class="numInput"> Side 'b': <input id="b" name="SSSINPUT" type="number"></div>
+    <div class="numInput"> Side 'c': <input id="c" name="SSSINPUT" type="number"></div>
+    <button class="mybtn" onclick="calculate('SSSINPUT')">Calculate</button>
+  </div>
+
+
+  <div id="AAS" class="triangletype">
+    <h1>AAS</h1>
+    <div class="numInput"> Angle 'A': <input id="A" name="AASINPUT" type="number"></div>
+    <div class="numInput"> Angle 'B': <input id="B" name="AASINPUT" type="number"></div>
+    <div class="numInput"> Side 'c': <input id="c" name="AASINPUT" type="number"></div>
+    <button class="mybtn" onclick="calculate('AASINPUT')">Calculate</button>
+  </div>
+</body>
+
+</html>
