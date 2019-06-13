@@ -114,23 +114,68 @@ function calculate(type) {
     output.push("")
   }
 
-  if (type === 'AASINPUT') {
+  if (type === 'ASAINPUT') {
     let A = nums['A']
-    let B = nums['B']
     let c = nums['c']
+    let B = nums['B']
+
 
     output.push("When we have Angle-Angle-Side, we can find the 3rd angle because we know the sum of angles in a triangle is 180 degrees")
     let C = round(180 - A - B, 3)
-    output.push("C = 180° - A - B = 180° -" + A + "° - " + B + "° =" + C  + "°")
+    output.push("C = 180° - A - B = 180° -" + A + "° - " + B + "° =" + C + "°")
     output.push("We will use the law of sines to find the other two sides:")
 
-    output.push("b / sinB = c / sinC   =>   b = csinB / sinC")
-    output.push("a / sinA = c / sinC   =>   a = csinA / sinC")
+    output.push('---')
 
-    let b = round(c * Math.sin(B * Math.PI / 180) / Math.sin(C * Math.PI / 180), 3)
-    output.push("b = " + c + "sin(" + b + ")/ sin(" + c + ") = " + b)
-    let a = round(c * Math.sin(A * Math.PI / 180) / Math.sin(C * Math.PI / 180), 3)
+    output.push("a / sinA = c / sinC   =>   a = csinA / sinC")
+    let a = round(c * Math.sin(rads(A)) / Math.sin(rads(C)), 3)
     output.push("a = " + c + "sin(" + A + ")/ sin(" + c + ") = " + a)
+
+    output.push('---')
+
+    output.push("b / sinB = c / sinC   =>   b = csinB / sinC")
+    let b = round(c * Math.sin(rads(B)) / Math.sin(rads(C)), 3)
+    output.push("b = " + c + "sin(" + b + ")/ sin(" + c + ") = " + b)
+
+  }
+
+  if (type === 'AASINPUT') {
+    let A = nums['A']
+    let B = nums['B']
+    let a = nums['a']
+
+    output.push("When we have Angle-Angle-Side, we can find the 3rd angle because we know the sum of angles in a triangle is 180 degrees")
+    let C = round(180 - A - B, 3)
+    output.push("C = 180° - A - B = 180° -" + A + "° - " + B + "° =" + C + "°")
+    output.push("We will use the law of sines to find the other two sides:")
+
+    output.push('---')
+
+    output.push("b / sinB = a / sinA   =>   b = asinB / sinA")
+    let b = round(a * Math.sin(rads(B)) / Math.sin(rads(A)), 3)
+    output.push("a = " + a + "sin(" + B + ")/ sin(" + A + ") = " + a)
+
+    output.push('---')
+
+    output.push("c / sinC = a / sinA   =>   c = asinC / sinA")
+    let c = round(a * Math.sin(rads(C)) / Math.sin(rads(A)), 3)
+    output.push("b = " + a + "sin(" + C + ")/ sin(" + A + ") = " + b)
+  }
+
+  if (type === 'AAAINPUT') {
+    let A = nums['A']
+    let B = nums['B']
+    let C = nums['C']
+
+    if (round(A + B + C, 3) != 180) {
+      output.push("This triangle is invalid, the sum of the angles is " + (A + B + C) + "°, it should be 180°")
+    } else {
+      output.push("When we have Angle-Angle-Angle, we can't find any of the sides, because we only know the angles between the triangles")
+      output.push("Think about it like this - this is a shape that we could scale up or down to be any size, so we can't solve for anything")
+      output.push("A = " + A + "°")
+      output.push("B = " + B + "°")
+      output.push("C = " + C + "°")
+    }
   }
 
   console.log(output)
@@ -159,4 +204,21 @@ function calculate(type) {
 
 function cosinesAngle(a, b, c) {
   return round(Math.acos((Math.pow(c, 2) - (Math.pow(a, 2) + Math.pow(b, 2))) / (-2 * a * b)) * 180 / Math.PI, 3)
+}
+
+function rads(degrees) {
+  return degrees * Math.PI / 180
+}
+
+function degs(rads) {
+  return rads * 180 / Math.PI
+}
+
+function showHide(divID) {
+  var x = document.getElementById(divID);
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
 }

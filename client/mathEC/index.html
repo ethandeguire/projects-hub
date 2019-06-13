@@ -18,14 +18,9 @@
   }
 
   .w3-bar,
-  h1,
-  button {
-    font-family: "Montserrat", sans-serif
-  }
-
-  .fa-anchor,
-  .fa-coffee {
-    font-size: 200px
+  h1 {
+    font-family: "Montserrat", sans-serif;
+    margin-bottom: 0px;
   }
 
   .numInput {
@@ -36,17 +31,20 @@
 
   .triangletype {
     padding-left: 20%;
+    /* text-indent: 1.5%; */
   }
 
   .mybtn {
     margin-bottom: 5px;
     display: block;
+    margin-left: 10px;
   }
 
   p {
-    font-size: 16px;
+    font-size: 14px;
     display: block;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding-left: 5px;
   }
 
   .foto {
@@ -54,7 +52,7 @@
   }
 
   .tab {
-    margin-left:40px;
+    margin-left: 40px;
   }
 </style>
 
@@ -68,9 +66,16 @@
 
   <img class='foto' src="https://i.imgur.com/IbI2Ur0.png">
 
+  <h1 style="padding-left: 20%;">How to use:
+    <p>Reference the high quality drawing above to figure out which angles or sides you have</p>
+    <p>Enter the values of your sides and angles into the boxes, make sure to keep your angles in degree mode.</p>
+    <p>Click <b>"Calculate"</b> and then make sure you know how to do it!</p>
+  </h1>
 
   <div id="SSA" class="triangletype">
     <h1>SSA</h1>
+    <button class="mybtn" onclick="showHide('SSAIMAGE')">Show Example</button>
+    <img id='SSAIMAGE' class='foto' src="https://i.imgur.com/Od0aIKI.png" style="display:none;">
     <div class="numInput"> Side 'a': <input id="a" name="SSAINPUT" type="number"></div>
     <div class="numInput"> Side 'b': <input id="b" name="SSAINPUT" type="number"></div>
     <div class="numInput"> Angle 'A': <input id="A" name="SSAINPUT" type="number"></div>
@@ -80,6 +85,8 @@
 
   <div id="SSS" class="triangletype">
     <h1>SSS</h1>
+    <button class="mybtn" onclick="showHide('SSSIMAGE')">Show Example</button>
+    <img id='SSSIMAGE' class='foto' src="https://i.imgur.com/FjBLmRH.png" style="display:none;">
     <div class="numInput"> Side 'a': <input id="a" name="SSSINPUT" type="number"></div>
     <div class="numInput"> Side 'b': <input id="b" name="SSSINPUT" type="number"></div>
     <div class="numInput"> Side 'c': <input id="c" name="SSSINPUT" type="number"></div>
@@ -87,12 +94,34 @@
   </div>
 
 
+  <div id="ASA" class="triangletype">
+    <h1>ASA</h1>
+    <button class="mybtn" onclick="showHide('ASAIMAGE')">Show Example</button>
+    <img id='ASAIMAGE' class='foto' src="https://i.imgur.com/bXnafyd.png" style="display:none;">
+    <div class="numInput"> Angle 'A': <input id="A" name="ASAINPUT" type="number"></div>
+    <div class="numInput"> Side 'c': <input id="c" name="ASAINPUT" type="number"></div>
+    <div class="numInput"> Angle 'B': <input id="B" name="ASAINPUT" type="number"></div>
+    <button class="mybtn" onclick="calculate('ASAINPUT')">Calculate</button>
+  </div>
+
   <div id="AAS" class="triangletype">
-    <h1>AAS</h1>
+    <h1>AAS / SAA</h1>
+    <button class="mybtn" onclick="showHide('AASIMAGE')">Show Example</button>
+    <img id='AASIMAGE' class='foto' src="https://i.imgur.com/hGAyIq4.png" style="display:none;">
     <div class="numInput"> Angle 'A': <input id="A" name="AASINPUT" type="number"></div>
     <div class="numInput"> Angle 'B': <input id="B" name="AASINPUT" type="number"></div>
-    <div class="numInput"> Side 'c': <input id="c" name="AASINPUT" type="number"></div>
+    <div class="numInput"> Side 'a': <input id="a" name="AASINPUT" type="number"></div>
     <button class="mybtn" onclick="calculate('AASINPUT')">Calculate</button>
+  </div>
+
+  <div id="AAA" class="triangletype">
+    <h1>AAA</h1>
+    <button class="mybtn" onclick="showHide('AAAIMAGE')">Show Example</button>
+    <img id='AAAIMAGE' class='foto' src="https://i.imgur.com/JYKJuaU.png" style="display:none;">
+    <div class="numInput"> Angle 'A': <input id="A" name="AAAINPUT" type="number"></div>
+    <div class="numInput"> Angle 'B': <input id="B" name="AAAINPUT" type="number"></div>
+    <div class="numInput"> Angle 'C': <input id="C" name="AAAINPUT" type="number"></div>
+    <button class="mybtn" onclick="calculate('AAAINPUT')">Calculate</button>
   </div>
 </body>
 
