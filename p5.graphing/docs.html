@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>p5.graphing - Documentation</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src='script.js'> </script>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="w3.css">
+  <link rel="stylesheet" type="text/css" href="../libraries/code-prettify/sunburst.css">
+  <link rel="stylesheet" type="text/css" href="../libraries/code-prettify/prettify.css">
+
+</head>
+
+<body onload='loadscript("../libraries/code-prettify/code-prettify.js")'>
+
+  <!-- TOP NAVIGATION BAR -->
+  <div class="w3-bar w3-black">
+    <button class="w3-bar-item w3-button" onclick="window.location.href = 'docs.html';">Documentation</button>
+    <button class="w3-bar-item w3-button" onclick="window.location.href = 'getStarted.html';">Get Started</button>
+    <button class="w3-bar-item w3-button" onclick="window.location.href = 'about.html';">About</button>
+  </div>
+
+  <!-- DOCUMENTATION PAGE -->
+  <div id=documentation class=pages>
+
+    <!-- SIDE NAVIGATION BAR -->
+    <div class="sidenav">
+      <a href="#home">Home</a>
+      <a href="#Graph">Create a Graph</a>
+      <a href="#show">Show Graph</a>
+      <a href="#labels">Axes Labels and Title</a>
+      <a href="#addpoints">Add Points</a>
+      <a href="#addpointuncert">Points With Uncertainties</a>
+      <a href="#addfunc">Draw a Function</a>
+      <a href="#intervs">Set your axes intervals</a>
+      <a href="#limits">Set your axes start and stop points</a>
+      <a href="#backgroundcol">Change Background Color</a>
+      <a href="#gridlines">Draw Grid Lines</a>
+      <a href="#canvaslocation">Canvas Location</a>
+    </div>
+
+    <!-- MAIN CONTENT BAR -->
+    <div class="content">
+
+      <h1 id=home><i>p5.graphing.js</i></h1>
+      <h3 style="margin-left:18px"> A library for p5.js <br> By <linky style="color:skyblue"
+          onclick="window.location.href = 'about.html';">
+          Ethan DeGuire</linky>
+      </h3>
+
+      <!-- Documentation Elements -->
+      <fieldset id=Graph>
+        <h9>new Graph(type)</h9><br>
+        <p1>Creates a new graph object </p1>
+        <pre class="prettyprint">grph = new Graph('xy')</pre>
+        <p1> Currently available types: </p1>
+        <p>
+          -'xy': normal xy plane
+        </p>
+      </fieldset>
+      <fieldset id=show>
+        <h9>show()</h9><br>
+        <p1>Draw your graph object</p1>
+        <pre class="prettyprint">grph.show()</pre>
+        <p> This one is pretty self explanatory</p>
+        <p> Should be called after all of your data and settings have been input</p>
+      </fieldset>
+      <fieldset id=labels>
+        <h9>xLabel(text<i>, [x, y]</i>)</h9><br>
+        <h9>yLabel(text<i>, [x, y]</i>)</h9><br>
+        <h9>title(text<i>, [x, y]</i>)</h9><br>
+        <p1>Add labels to your chart</p1>
+        <pre
+          class="prettyprint">grph.xLabel('Radius (m)', [10,-20]) //moves label right:10px, down:20px<br>grph.yLabel('Velocity (m/s)')  //label stays in standard position<br>grph.title('Radius v Velocity', [0,10])  //moves label up:10px</pre>
+        <p1>text:</p1>
+        <p>what the axis or title of your graph should be</p>
+        <p1>[x,y] - optional argument:</p1>
+        <p>offsets, these describe where your label should be placed relative to its standard position, in case of
+          overlap, or if you want to adjust the position of a label. In terms of pixels</p>
+      </fieldset>
+      <fieldset id=addpoints>
+        <h9>addPoints( [[x1, x2, ...], [y1, y2, ...]], 'lists', color )</h9><br>
+        <h9>addPoints( [[x1, y1], [x2, y2], [...]], 'points', color )</h9><br>
+        <p1>Input a set of x-y points to be graphed</p1>
+        <pre
+          class="prettyprint">grph.addPoints([[0, 1, 2, 3], [0.9, 0.8, 0.7, 0.6]], 'lists', 'GREEN')<br>//draws green points at (0, 0.9), (1, 0.8), ...<br><br>// ^ makes the same points as: <br>grph.addPoints([[0, 0.9], [1, 0.8], [2, 0.7], [3, 0.6]], 'points', [255,120,60])</pre>
+        <p1>x[],y[]:</p1>
+        <p>Both arrays must be the same length</p>
+        <p>'points' mode: (x1, y1), (x2, y2) or 'lists' mode: [x1,x2], [y1,y2]</p>
+        <p1>color:</p1>
+        <p>select color: one of p5.graphing.js's presets or a custom color array in the form: [r,g,b]</p>
+      </fieldset>
+      <fieldset id=addpointuncert>
+        <h9>addPointUncert( [[v1, v2, ...], [w1, w2, ...]], 'lists')</h9><br>
+        <h9>addPointUncert( [[v1, w1], [v2, w2], [...]], 'points')</h9><br>
+        <p1>Input a set of x-y uncertainties to be drawn onto your points</p1>
+        <pre
+          class="prettyprint">grph.addPointUncert([[0.4, 1, 0.2, 0.3], [0.2, 0.3, 0.2, 0.1]], 'lists')<br><br>// ^ makes the same uncertainties as: <br>grph.addPointUncert([[0.4, 0.2], [1, 0.3], [0.2, 0.2], [0.3, 0.1]], 'points', [255,120,60])</pre>
+        <p1>v[], w[]:</p1>
+        <p>v[] is the uncertainty list for your x[] values and w[] is for y[] values</p>
+        <p>You must have added points to add uncertainties to those points</p>
+        <p>Both arrays must be the same length, and the same length as the point arrays</p>
+        <p>'points' mode: (x1 ± v1, y1 ± w1) or 'lists' mode:(x2 ± v2, y2 ± w2) or [x1,x2], [y1,y2], [v1,v2], [w1,w2]
+        </p>
+      </fieldset>
+      <fieldset id=bestfit>
+        <h9>bestfit(<i>drawLabel, color</i>)</h9><br>
+        <p1>Create a line of best fit for your points</p1>
+        <pre
+          class="prettyprint">grph.bestfit()  //creates line & label in default color<br>  //  or <br>grph.bestfit(false, "RED")  //doesnt label line, line is red</pre>
+        <p1>drawLabel:</p1>
+        <p>boolean: label the trendline with a legend</p>
+        <p1>color:</p1>
+        <p>select color: one of p5.graphing.js's presets or a custom color array in the form: [r,g,b]</p>
+      </fieldset>
+      <fieldset id=addfunc>
+        <h9>addFunc(function<i>, color</i>)</h9><br>
+        <p1>Draw custom functions</p1>
+        <pre
+          class="prettyprint">grph.addFunc(x => (x * 3) - 2, [120,120,0] // linear function y = 3x -2, drawn in yellow)<br>grph.addFunc(function(x){return pow(2,x)}, color = 'YELLOW') // y = 2^x, drawn yellow <br>grph.addFunc(sin,"BLACK") // y = sin(x), black wave</pre>
+        <p1>function:</p1>
+        <p>The passed function must be a valid JS function that returns a number or undefined. You can define it however
+          you like, with function shorthand, full function notation, or defined elsewhere in your code or library</p>
+        <p1>color:</p1>
+        <p>select color: one of p5.graphing.js's presets or a custom color array in the form: [r,g,b]</p>
+      </fieldset>
+      <fieldset id=intervs>
+        <h9>xInterv(value)</h9><br>
+        <h9>yInterv(value)</h9><br>
+        <p1>Set the interval with which axes labels are drawn</p1>
+        <pre
+          class="prettyprint">grph.xInterv(0.5) //x axis example: 0, 0.5, 1, 1.5<br>grph.yInterv(2) //y axis example: 0, 2, 4, 6, 8</pre>
+        <p1>value:</p1>
+        <p>The rate at which axes labels are incremented.</p>
+        <p1>If you don't call these functions, it will automatically make intervals, but they may not be good</p1>
+      </fieldset>
+      <fieldset id=limits>
+        <h9>xlimits(xMin, xMax)</h9><br>
+        <h9>ylimits(yMin, yMax)</h9><br>
+        <h9>axis(xMin, xMax, yMin, yMax)</h9><br>
+        <p1>Set the start and stop points of your axes</p1>
+        <pre
+          class="prettyprint">grph.xlimits(-2,4) // smallest and largest x vals are -2 and 4<br>grph.ylimits(6,10) // smallest and largest y vals are 6 and 10<br> //  does the same thing as <br>grph.axis(-2, 4, 6, 10)</pre>
+        <p1>xMin, xMax:</p1>
+        <p>define the leftmost and rightmost values of your graph</p>
+        <p1>yMin, yMax</p1>
+        <p>define the lowermost and uppermost values of your graph</p>
+      </fieldset>
+      <fieldset id=backgroundcol>
+        <h9>backgroundCol(color)</h9><br>
+        <p1>Set the background color of your graph</p1>
+        <pre
+          class="prettyprint">grph.backgroundCol([255,120,120]) // makes the background a salmon color <br>grph.backgroundCol("RED") // background red</pre>
+        <p1>color:</p1>
+        <p>select color: one of p5.graphing.js's presets or a custom color array in the form: [r,g,b]</p>
+      </fieldset>
+      <fieldset id=gridlines>
+        <h9>drawGridLines(bool)</h9><br>
+        <p1>Draw gridlines behind your functions or points</p1>
+        <pre class="prettyprint">grph.drawGridLines(false) // turns off gridlines</pre>
+        <p1>bool:</p1>
+        <p>turns gridlines on or off</p>
+        <p>default: true, gridlines on</p>
+      </fieldset>
+      <fieldset id=canvaslocation>
+        <h9>canvasLocation(xi, yi, xf, yf)</h9><br>
+        <p1>Change where the chart is drawn on your canvas</p1>
+        <pre
+          class="prettyprint">grph.createCanvas(100,100)<br>grph.canvasLocation(10,10,90,90)<br> // draws canvas from (10,10) to (90,90)</pre>
+        <p>If this command is not called, the chart will fill your entire canvas.</p>
+        <p1>xi, yi:</p1>
+        <p>The coordinate point of the top left corner of the chart on your canvas.</p>
+        <p1>xf, yf:</p1>
+        <p>The coordinate point of the bottom right corner of the chart on your canvas.</p>
+      </fieldset>
+    </div>
+  </div>
+</body>
+
+</html>

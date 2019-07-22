@@ -6,42 +6,59 @@
 
 <head>
   <link rel="stylesheet" type="text/css" href="../hub/styles.css">
+  <script>
+    function show(id) {
+      let old = document.getElementsByClassName('content')
+      for (let element of old) {
+        element.style.display = 'none'
+      }
+      document.getElementById(id).style.display = 'inline-block'
+    }
+  </script>
 </head>
 
 <body>
-
   <!-- Header -->
-  <h1 style="padding:10px; margin:10px;text-align: center; font-size: 5vw; background-color: black; color:whitesmoke">
+  <h1 style="padding:10px; margin:10px;text-align: center; font-size: 6vw; background-color: black; color:whitesmoke">
     <b> Ethan DeGuire </b>
   </h1>
 
   <!-- Navbar (sit on top) -->
   <div class="top-bar" style="text-align: center">
-    <div class="hide-small">
-      <a href="../hub/projects.html" class="button">Projects</a>
-      <a href="../hub/about.html" class="button">Contact / About</a>
-    </div>
-    <div class="hide-big" style="text-align: center">
-      <a href="../hub/projects.html" class="button" style="white-space: nowrap;">Projects</a>
-      <a href="../hub/about.html" class="button" style="white-space: nowrap;">Contact / About</a>
+    <div style="text-align: center">
+      <button class="button" onclick="show('projects')">Projects</button>
+      <button class="button" onclick="show('about')">About</button>
+      <button class="button" onclick="show('contact')">Contact</button>
     </div>
   </div>
 
-  <div style="text-align: center">
-    <h3>My Projects</h3>
-  </div>
 
+  <!-- CONTENT - PROJECTS PAGE -->
+  <div id="projects" class="content">
 
-  <!-- Page content -->
-  <div style="max-width:90%; margin:0 auto">
-    <div style="text-align:center;">
+    <div style="text-align: center">
+      <h3>My Projects</h3>
+    </div>
+
+    <div style="text-align:center;max-width:90%; margin:0 auto">
+      <div class="project-item">
+        <img src="" alt="p5.graphing example" style="width:100%">
+        <h3>p5.graphing</h3>
+        <p class="tools-used">JavaScript, p5.js</p>
+        <p>This is a library for the JavaScript framework, <a href='https://p5js.org'>p5.js</a>, that is an all purpose graphing
+          library. It supports many types of graphs, including bar graphs, line graphs and pie graphs. You can read more
+          about it on the wiki and documentations at <a href='http://p5graphing.info/p5.graphing/docs.html'>p5graphing.info</a></p>
+        <p><button onclick="location.href = 'http://p5graphing.info/p5.graphing/docs.html'" button class="view-button">View</button></p>
+      </div>
       <div class="project-item">
         <img src="https://i.imgur.com/OkT2x6W.png" alt="MinMax Program" style="width:100%">
         <h3>Min-Max Line Finder</h3>
         <p class="tools-used">JavaScript, HTML, Desmos GC API</p>
-        <p> This project makes use of a powerful API, made by Desmos, with a graphing calculator embedded in the page to
+        <p> This project makes use of a powerful API, made by Desmos, with a graphing calculator embedded in the page
+          to
           show points with uncertainty values, and equations based off of calculations done in JavaScript. The purpose
-          of it is to automate a process which can take a significant amount of time, finding minimum and maximum slope
+          of it is to automate a process which can take a significant amount of time, finding minimum and maximum
+          slope
           gradients given a dataset. I did this to help speed up the process of writing Physics lab reports.</p>
         <p><button onclick="location.href = '../minmax/index.html'" button class="view-button">View</button></p>
       </div>
@@ -57,7 +74,8 @@
         <img src="https://i.imgur.com/U9QYf21.png" alt="WebArt Pic" style="width:100%">
         <h3>WebArt</h3>
         <p class="tools-used">p5.js</p>
-        <p> A project created in collaboration with my classmate, Jake, that seeks to create a basic yet capable online
+        <p> A project created in collaboration with my classmate, Jake, that seeks to create a basic yet capable
+          online
           pixel art platform. <a href="https://github.com/reallylogical/webcode">Code</a></p>
         <p><button onclick="location.href = '../webart/index.html'" button class="view-button">View</button></p>
       </div>
@@ -110,8 +128,10 @@
         <img src="https://i.imgur.com/iSGw5Zx.png" alt="War Simulation" style="width:100%">
         <h3>Card Game 'War' Simulation</h3>
         <p class="tools-used">p5.js</p>
-        <p>Simulation of the card game 'War', it is a game of chance and uses randomly generated numbers to simulate the
-          card game at high speeds. A text file can be downloaded with the amount of ties across many games of war.</p>
+        <p>Simulation of the card game 'War', it is a game of chance and uses randomly generated numbers to simulate
+          the
+          card game at high speeds. A text file can be downloaded with the amount of ties across many games of war.
+        </p>
         <p><button onclick="location.href = '../warSim/index.html'" button class="view-button">View</button></p>
 
       </div>
@@ -124,6 +144,58 @@
         <p><button onclick="location.href = '../gravity/index.html'" button class="view-button">View</button></p>
       </div>
     </div>
+
+  </div>
+
+  <!-- CONTENT - ABOUT PAGE -->
+  <div id="about" class="content">
+    <div style="text-align: center">
+      <h3>About</h3>
+    </div>
+  </div>
+
+  <!-- CONTENT - ABOUT PAGE -->
+  <div id="contact" class="content" style="max-width:1564px;">
+
+    <div style="text-align: center">
+      <h3>Social Media and Contact Information</h3>
+    </div>
+
+    <div style="text-align:center;max-width:90%; margin:0 auto">
+      <div class='crop project-item'>
+        <img src='https://irchs.org/wp-content/uploads/2016/12/gmail-logo.png'
+          onclick="location.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=ethandeguire@gmail.com'">
+        <p class="username">ethandeguire@gmail.com</p>
+      </div>
+
+      <div class='crop project-item'>
+        <img src='https://s3.amazonaws.com/eclincher.wp.upload/wp-content/uploads/2018/03/20113248/screenshot_99.png'
+          onclick="location.href = 'https://twitter.com/EthanDeguire'">
+        <p class="username">ethandeguire</p>
+      </div>
+
+      <div class='crop project-item'>
+        <img src='https://img.icons8.com/metro/420/github.png'
+          onclick="location.href = 'https://github.com/ethandeguire'">
+        <p class="username">ethandeguire</p>
+      </div>
+
+      <div class='crop project-item'>
+        <img src='https://www.law.berkeley.edu/wp-content/uploads/2018/03/linkedin-logo-copy.png'
+          onclick="location.href = 'https://www.linkedin.com/in/ethan-deguire-259516185/'">
+        <p class="username">Ethan DeGuire</p>
+      </div>
+
+      <div class='crop project-item'>
+        <img src='https://instagram-brand.com/wp-content/themes/ig-branding/assets/images/ig-logo-email.png'
+          onclick="location.href = 'https://www.instagram.com/ethandeguire/'">
+        <p class="username">Ethan DeGuire</p>
+      </div>
+
+    </div>
+
+  </div>
+
 </body>
 
 </html>

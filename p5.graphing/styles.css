@@ -1,0 +1,98 @@
+* {
+  box-sizing: border-box;
+}
+
+fieldset {
+  padding: 10px;
+  margin: 100px;
+  border-color: antiquewhite
+}
+
+h9 {
+  margin: 2px;
+  padding: 2px;
+  padding-top: 0px;
+  font-size: 20px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+p1 {
+  color: black;
+  margin: 0px;
+  padding-left: 20px;
+  padding-top: 3px;
+  font-size: 17px;
+}
+
+p {
+  color: black;
+  margin: 0px;
+  padding-left: 20px;
+  padding-top: 0px;
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 10px
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+}
+
+/* Style the side navigation */
+.sidenav {
+  height: 88%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 50px;
+  left: 10px;
+  background-color: #111;
+  overflow-x: hidden;
+}
+
+
+/* Side navigation links */
+.sidenav a {
+  color: white;
+  padding: 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color on hover */
+.sidenav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Style the content */
+.content {
+  margin-left: 200px;
+  padding-left: 20px;
+}
+
+a {
+  padding-left: 30px;
+  color: aqua;
+}
+
+.example {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+  background-color: rgba(211, 211, 211, 0.12)
+}
+
+@media only screen and (max-width: 600px) {
+  .sidenav {
+    visibility: hidden;
+  }
+
+  .content {
+    margin-left: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
