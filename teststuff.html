@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<title>test</title>
+
+<head>
+</head>
+
+<body>
+  <p>testing html</p>
+  
+  <p>value: <script>
+      (function callTest() {
+        fetch('/.netlify/functions/test')
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (myJson) {
+            return JSON.stringify(myJson);
+          });
+      })();
+    </script></p>
+</body>
+
+</html>
