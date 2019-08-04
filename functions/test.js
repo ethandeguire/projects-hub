@@ -13,6 +13,6 @@ exports.handler = function(event, context, callback) {
 
   callback(null, {
     statusCode: 200,
-    body: "Hello, World ⊂◉‿◉つ" + res
+    body: "Hello, World ⊂◉‿◉つ - updated: " + res + " " + createP
   });
 }
