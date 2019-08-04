@@ -56,6 +56,8 @@ function addScore(username, score) {
 async function getAllScores() {
   try {
     let value = await readAll();
+    console.log(value)
+    return value
   } catch (error) {
     return error
   }
