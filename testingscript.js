@@ -54,20 +54,15 @@ function addScore(username, score) {
 }
 
 async function getAllScores() {
-  await readAll().then((scores) => {
-    if (scores.message === 'unauthorized') {
-      if (isLocalHost()) {
-        alert('FaunaDB key is not unauthorized. Make sure you set it in terminal session where you ran `npm start`. Visit http://bit.ly/set-fauna-key for more info')
-      } else {
-        alert('FaunaDB key is not unauthorized. Verify the key `FAUNADB_SERVER_SECRET` set in Netlify enviroment variables is correct')
-      }
-      return false
-    }
-    console.log(scores)
-    return scores
-  })
+  try {
+    let value = await readAll();
+  } catch (error) {
+    return error
+  }
+  
 }
 
+console.log(await getAllScores)
 let x = getAllScores()
 getAllScores().then(console.log)
 console.log(getAllScores().then(console.log))
