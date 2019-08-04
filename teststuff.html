@@ -7,21 +7,21 @@
 
 <body>
   <p>testing html</p>
-  
-  <p>value: <p id="testp"></p></p>
-  <script>
-      function callTest() {
-        fetch('/.netlify/functions/test')
-          .then(function (response) {
-            return response.json();
-          })
-          .then(function (myJson) {
-            return JSON.stringify(myJson);
-          });
-      }
 
-      document.getElementById("testp").innerHTML = callTest();
-    </script>
+  <p>value: <p id="testp"></p>
+  </p>
+  <script>
+
+    function httpGet(theUrl) {
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", theUrl, false); // false for synchronous request
+      xmlHttp.send(null);
+      return xmlHttp.responseText;
+    }
+
+
+    document.getElementById("testp").innerHTML = httpGet("http://ethandeguire.info/.netlify/functions/test");
+  </script>
 </body>
 
 </html>
