@@ -6,4 +6,4 @@
   publish = "build"
 
 [template.environment]
-  FAUNADB_SERVER_SECRET = "Your FaunaDB Server Secret"
+  FAUNADB_SERVER_SECRET = "fnADU-i9u6ACDWt9wl7qo1o6P6EKemomCFf7pGTN"
