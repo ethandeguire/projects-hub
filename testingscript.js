@@ -63,9 +63,11 @@ async function getAllScores() {
       }
       return false
     }
+    console.log(scores)
     return scores
   })
 }
 
 let x = getAllScores()
+getAllScores().then(console.log)
 console.log(getAllScores().then(console.log))
