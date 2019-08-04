@@ -5,9 +5,9 @@
     "faunadb": "^2.5.2"
   },
   "scripts": {
-    "bootstrap": "node ./scripts/bootstrap-fauna-database.js",
+    "bootstrap": "node ./functions/scripts/bootstrap-fauna-database.js",
     "docs": "md-magic --path '**/*.md' --ignore 'node_modules'",
-    "checkForFaunaKey": "node ./scripts/check-for-fauna-key.js",
+    "checkForFaunaKey": "node ./functions/scripts/check-for-fauna-key.js",
     "start": "npm-run-all --parallel checkForFaunaKey start:app start:server",
     "start:server": "netlify-lambda serve functions -c ./webpack.config.js",
     "prebuild": "echo 'setup faunaDB' && npm run bootstrap",
