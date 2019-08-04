@@ -8,8 +8,9 @@
 <body>
   <p>testing html</p>
   
-  <p>value: <script>
-      (function callTest() {
+  <p>value: <p id="testp"></p></p>
+  <script>
+      function callTest() {
         fetch('/.netlify/functions/test')
           .then(function (response) {
             return response.json();
@@ -17,8 +18,10 @@
           .then(function (myJson) {
             return JSON.stringify(myJson);
           });
-      })();
-    </script></p>
+      }
+
+      document.getElementById("testp").innerHTML = callTest();
+    </script>
 </body>
 
 </html>
