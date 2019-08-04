@@ -61,11 +61,11 @@ async function getAllScores() {
       } else {
         alert('FaunaDB key is not unauthorized. Verify the key `FAUNADB_SERVER_SECRET` set in Netlify enviroment variables is correct')
       }
-      return await false
+      return false
     }
-    return await scores
+    return scores
   })
 }
 
-
-console.log(getAllScores())
+getAllScores().then(console.log)
+console.log(getAllScores().then(console.log))
