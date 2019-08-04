@@ -54,7 +54,7 @@ function addScore(username, score) {
 }
 
 async function getAllScores() {
-  readAll().then((scores) => {
+  await readAll().then((scores) => {
     if (scores.message === 'unauthorized') {
       if (isLocalHost()) {
         alert('FaunaDB key is not unauthorized. Make sure you set it in terminal session where you ran `npm start`. Visit http://bit.ly/set-fauna-key for more info')
@@ -67,5 +67,5 @@ async function getAllScores() {
   })
 }
 
-getAllScores().then(console.log)
+let x = getAllScores()
 console.log(getAllScores().then(console.log))
