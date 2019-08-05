@@ -45,15 +45,14 @@ async function addScore(username, score) {
     username: username,
     score: score
   }
-
+  
   return await create(info)
 }
 
 // add score
-addScore.then((response) => {
-  if (create({username: "peepeepoopoowoman", score: 69})) { console.log("Added score") }
-  else console.log(response)
-})
+addScore({username: "peepeepoopoowoman", score:69}).then((response) => 
+  console.log(response)
+)
 
 // read scores
 readAll().then((scores) =>
