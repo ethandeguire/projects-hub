@@ -43,6 +43,7 @@ create({username: "peepeepoopoowoman", score:69}).then((response) =>
   console.log(response)
 )
 
+
 // read scores
 readAll().then((scores) =>
   console.log(scores)
