@@ -38,19 +38,8 @@ const batchDelete = (ids) => {
   })
 }
 
-// ---- my functions ----
-async function addScore(username, score) {
-  // create data
-  const info = {
-    username: username,
-    score: score
-  }
-  
-  return await create(info)
-}
-
 // add score
-addScore({username: "peepeepoopoowoman", score:69}).then((response) => 
+create({username: "peepeepoopoowoman", score:69}).then((response) => 
   console.log(response)
 )
 
