@@ -39,32 +39,23 @@ const batchDelete = (ids) => {
 }
 
 // ---- my functions ----
-function addScore(username, score) {
+async function addScore(username, score) {
   // create data
   const info = {
     username: username,
     score: score
   }
-  // send data
-  create(info).then((response) => {
-    console.log(response)
-  }).catch((e) => {
-    console.log('An API error occurred', e)
-  })
+
+  return await create(info)
 }
 
-async function getAllScores() {
-  try {
-    let value = await readAll();
-    console.log(value)
-    return value
-  } catch (error) {
-    return error
-  }
-  
-}
+// add score
+addScore.then((response) => {
+  if (create({username: "peepeepoopoowoman", score: 69})) { console.log("Added score") }
+  else console.log(response)
+})
 
-console.log(getAllScores())
-let x = getAllScores()
-getAllScores().then(console.log)
-console.log(getAllScores().then(console.log))
+// read scores
+readAll().then((scores) =>
+  console.log(scores)
+)
