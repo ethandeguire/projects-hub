@@ -112,3 +112,9 @@ html {
 .content {
   width: 100%;
 }
+
+.container {
+  text-align: center;
+  max-width: 75%;
+  margin: 0 auto;
+}
