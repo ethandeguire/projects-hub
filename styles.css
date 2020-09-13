@@ -25,6 +25,21 @@
   display: block;
 }
 
+.contact-button {
+  border-radius: 4px;
+  margin: 5px 0px;
+  width: 100%;
+  background-color: rgb(200, 190, 190);
+  padding: 8px 16px;
+  color: #000;
+  background-color: #f1f1f1;
+  font-size: large;
+}
+
+.contact-button:hover{
+  opacity: 75%;
+}
+
 html, body, header {
   font-family: Ubuntu, Verdana, sans-serif;
   font-size: 20px;
@@ -83,7 +98,8 @@ html {
 
 .button:hover {
   color: #000 !important;
-  background-color: #ccc !important
+  background-color: #ccc !important;
+  opacity: 75%;
 }
 
 .button:disabled {
